@@ -1,0 +1,704 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "数据门户 API 文档",
+        "description": "Java大作业项目，国家信息化指标数据门户网站的API文档",
+        "version": "1.0.0",
+        "contact": {
+            "name": "Honour-Van 范皓年",
+            "email": "fhn037@126.com",
+            "url": "https://github.com/Honour-Van/Java-2021A"
+        },
+        "license": {
+            "name": "The MIT License",
+            "url": "https://mit-license.org/"
+        }
+    },
+    "paths": {
+        "/requestRecord": {
+            "get": {
+                "summary": "读取所有记录信息",
+                "description": "读取记录主表中的所有记录，指标的索引已转换为指标名称和编号的和",
+                "parameters": [],
+                "operationId": "get-info",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/Record"
+                                    },
+                                    "maxItems": 100
+                                },
+                                "example": {
+                                    "成功示例": [
+                                        {
+                                            "record_id": 0,
+                                            "country_name": "中国",
+                                            "index_value": 57.621430105217954,
+                                            "year": "2019",
+                                            "first_index": "信息基础设施_A-1",
+                                            "second_index": "带宽水平_A-11",
+                                            "third_index": "互联网用户的平均上网带宽_A-111"
+                                        },
+                                        {
+                                            "record_id": 1,
+                                            "country_name": "法国",
+                                            "index_value": 0.9325746188533388,
+                                            "year": "2019",
+                                            "first_index": "信息基础设施_A-1",
+                                            "second_index": "带宽水平_A-11",
+                                            "third_index": "互联网用户的平均上网带宽_A-111"
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Response"
+                                },
+                                "example": {
+                                    "失败示例": {
+                                        "code": 404,
+                                        "type": "Error",
+                                        "message": "Not Found"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "429": {
+                        "description": "Too Many Requests",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Response"
+                                },
+                                "example": {
+                                    "失败示例": {
+                                        "code": 429,
+                                        "type": "Error",
+                                        "message": "Too Many Requests"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "default": {
+                        "description": "Default",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Response"
+                                }
+                            }
+                        }
+                    }
+                },
+                "tags": [
+                    "数据查询模块"
+                ]
+            }
+        },
+        "/addRecord": {
+            "post": {
+                "summary": "增加记录",
+                "description": "增加一条记录信息",
+                "operationId": "add-record",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/Record"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/Record"
+                                    },
+                                    "maxItems": 100
+                                },
+                                "example": {
+                                    "成功示例": []
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Response"
+                                },
+                                "example": {
+                                    "失败示例": {
+                                        "code": 401,
+                                        "type": "Error",
+                                        "message": "Unauthorized"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Forbidden",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Response"
+                                },
+                                "example": {
+                                    "失败示例": {
+                                        "code": 403,
+                                        "type": "Error",
+                                        "message": "Forbidden"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "429": {
+                        "description": "Too Many Requests",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Response"
+                                },
+                                "example": {
+                                    "失败示例": {
+                                        "code": 429,
+                                        "type": "Error",
+                                        "message": "Too Many Requests"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "default": {
+                        "description": "Default",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Response"
+                                }
+                            }
+                        }
+                    }
+                },
+                "tags": [
+                    "数据改动模块"
+                ]
+            }
+        },
+        "/deleteRecord": {
+            "post": {
+                "summary": "删除记录",
+                "description": "删除一条记录信息",
+                "operationId": "delete-record",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "integer",
+                                "description": "记录索引号",
+                                "format": "int32",
+                                "maximum": 100000
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/Record"
+                                    },
+                                    "maxItems": 100
+                                },
+                                "example": {
+                                    "成功示例": []
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Response"
+                                },
+                                "example": {
+                                    "失败示例": {
+                                        "code": 401,
+                                        "type": "Error",
+                                        "message": "Unauthorized"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Forbidden",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Response"
+                                },
+                                "example": {
+                                    "失败示例": {
+                                        "code": 403,
+                                        "type": "Error",
+                                        "message": "Forbidden"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "429": {
+                        "description": "Too Many Requests",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Response"
+                                },
+                                "example": {
+                                    "失败示例": {
+                                        "code": 429,
+                                        "type": "Error",
+                                        "message": "Too Many Requests"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "default": {
+                        "description": "Default",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Response"
+                                }
+                            }
+                        }
+                    }
+                },
+                "tags": [
+                    "数据改动模块"
+                ]
+            }
+        },
+
+        "/updateRecord": {
+            "post": {
+                "summary": "改动记录",
+                "description": "对某一条记录信息进行改动",
+                "operationId": "update-record",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/Record"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/Record"
+                                    },
+                                    "maxItems": 100
+                                },
+                                "example": {
+                                    "成功示例": []
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Response"
+                                },
+                                "example": {
+                                    "失败示例": {
+                                        "code": 401,
+                                        "type": "Error",
+                                        "message": "Unauthorized"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Forbidden",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Response"
+                                },
+                                "example": {
+                                    "失败示例": {
+                                        "code": 403,
+                                        "type": "Error",
+                                        "message": "Forbidden"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "429": {
+                        "description": "Too Many Requests",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Response"
+                                },
+                                "example": {
+                                    "失败示例": {
+                                        "code": 429,
+                                        "type": "Error",
+                                        "message": "Too Many Requests"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "default": {
+                        "description": "Default",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Response"
+                                }
+                            }
+                        }
+                    }
+                },
+                "tags": [
+                    "数据改动模块"
+                ]
+            }
+        },
+        "/login": {
+            "post": {
+                "summary": "登录",
+                "tags": [
+                    "基本信息管理模块"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "登录成功",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Response"
+                                },
+                                "examples": {
+                                    "成功示例": {
+                                        "value": {
+                                            "code": 2005,
+                                            "type": "ERROR",
+                                            "message": "password 必填"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "登录失败",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Response"
+                                },
+                                "examples": {
+                                    "失败示例": {
+                                        "value": {
+                                            "code": "3000",
+                                            "type": "ERROR",
+                                            "message": "用户名或密码错误"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "429": {
+                        "description": "Too Many Requests",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Response"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Response"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Forbidden",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Response"
+                                }
+                            }
+                        }
+                    },
+                    "default": {
+                        "description": "Default",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Response"
+                                }
+                            }
+                        }
+                    }
+                },
+                "operationId": "post-login",
+                "description": "用户登录操作",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "username": {
+                                        "type": "string",
+                                        "description": "用户名"
+                                    },
+                                    "password": {
+                                        "type": "string",
+                                        "description": "密码",
+                                        "format": "password"
+                                    }
+                                },
+                                "required": [
+                                    "username",
+                                    "password"
+                                ]
+                            },
+                            "examples": {
+                                "提交范例": {
+                                    "value": {
+                                        "username": "coding",
+                                        "password": "123456",
+                                        "remember_me": true
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "description": ""
+                },
+                "parameters": []
+            }
+        },
+        "/logout": {
+            "get": {
+                "summary": "登出",
+                "tags": [
+                    "基本信息管理模块"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "登出成功",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Response"
+                                },
+                                "examples": {
+                                    "成功范例": {
+                                        "value": {
+                                            "code": 0,
+                                            "type": "SUCCESS",
+                                            "message": "登出成功"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "operationId": "get-logout",
+                "description": "用户登出",
+                "parameters": []
+            }
+        }
+    },
+    "servers": [
+        {
+            "description": "本地测试机",
+            "url": "localhost:8080"
+        }
+    ],
+    "components": {
+        "links": {},
+        "callbacks": {},
+        "securitySchemes": {
+            "regularSecurity": {
+                "type": "http",
+                "scheme": "basic"
+            },
+            "OAuth2": {
+                "type": "oauth2",
+                "flows": {
+                    "authorizationCode": {
+                        "scopes": {
+                            "readOnly": "read objects in your account"
+                        },
+                        "authorizationUrl": "https://example.com/oauth/authorize",
+                        "tokenUrl": "https://example.com/oauth/token"
+                    }
+                }
+            }
+        },
+        "schemas": {
+            "Record": {
+                "type": "object",
+                "properties": {
+                    "record_id": {
+                        "type": "integer",
+                        "description": "记录的ID索引，暂定最大100000条",
+                        "format": "int32",
+                        "maximum": 100000,
+                        "minimum": 0
+                    },
+                    "country_name": {
+                        "type": "string",
+                        "description": "国家名称",
+                        "maxLength": 10,
+                        "minLength": 2,
+                        "pattern": "[\u4e00-\u9fa5]+"
+                    },
+                    "index_value": {
+                        "type": "number",
+                        "description": "指标得分",
+                        "maximum": 1024,
+                        "minimum": 0,
+                        "format": "double"
+                    },
+                    "first_index": {
+                        "type": "string",
+                        "description": "一级指标名称",
+                        "maxLength": 20,
+                        "minLength": 2,
+                        "pattern": "[\u4e00-\u9fa5]+"
+                    },
+                    "second_index": {
+                        "type": "string",
+                        "description": "二级指标名称",
+                        "maxLength": 20,
+                        "minLength": 2,
+                        "pattern": "[\u4e00-\u9fa5]+"
+                    },
+                    "third_index": {
+                        "type": "string",
+                        "description": "三级指标名称",
+                        "maxLength": 20,
+                        "minLength": 2,
+                        "pattern": "[\u4e00-\u9fa5]+"
+                    },
+                    "year": {
+                        "type": "integer",
+                        "description": "年份",
+                        "maximum": 2200,
+                        "minimum": 1900
+                    }
+                }
+            },
+            "Response": {
+                "title": "response",
+                "type": "object",
+                "properties": {
+                    "code": {
+                        "type": "integer",
+                        "format": "int32",
+                        "maximum": 500,
+                        "minimum": 200
+                    },
+                    "type": {
+                        "type": "string",
+                        "enum": [
+                            "Success",
+                            "Error"
+                        ],
+                        "maxLength": 10,
+                        "pattern": "Success|Error"
+                    },
+                    "message": {
+                        "type": "string",
+                        "pattern": "^(?!_)(?!.*?_$)[a-zA-Z0-9_ ]+",
+                        "maximum": 50
+                    }
+                }
+            }
+        }
+    },
+    "security": [
+        {
+            "OAuth2": [
+                "write",
+                "read"
+            ]
+        }
+    ],
+    "tags": [
+        {
+            "name": "数据查询模块",
+            "description": "向后端发出查询请求，将数据体返回到页面"
+        },
+        {
+            "name": "数据改动模块",
+            "description": "向后端发送请求（和数据），将改动写回数据库中"
+        },
+        {
+            "name": "基本信息管理模块",
+            "description": "负责数据库使用者的登陆和权限管理"
+        }
+    ]
+}
