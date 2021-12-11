@@ -55,7 +55,10 @@ var lineOption = {
             "padding": 5,
             "itemGap": 10,
             "itemWidth": 25,
-            "itemHeight": 14
+            "itemHeight": 14,
+            "orient": 'vertical',
+            "top":'middle',
+            "right": 10
         }
     ],
     "tooltip": {
