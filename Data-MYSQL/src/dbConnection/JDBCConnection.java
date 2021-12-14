@@ -22,17 +22,17 @@ public class JDBCConnection
 			// System.out.println("正在建立数据库连接……");
 			connection = DriverManager.getConnection(
 					"jdbc:mysql://localhost:3306/showdata?useUnicode=true&characterEncoding=utf-8&useSSL=true&serverTimezone=Asia/Shanghai",
-					"root", "whl200228");
+					"java21a", "1234");
 
 			// System.out.println("数据库连接成功");
 		} // 15行
 		catch (ClassNotFoundException ex)
 		{// 找不到数据库驱动程序
-			System.out.println("找不到数据库驱动程序");
+			System.out.println("No JDBC Driver");
 		}
 		catch (SQLException ex)
 		{// 不能连接到数据库
-			System.out.println("不能建立与数据库的连接"); // 20行
+			System.out.println("Failed Connecting"); // 20行
 		}
 	}
 
@@ -46,7 +46,7 @@ public class JDBCConnection
 		}
 		catch (Exception e)
 		{
-			System.out.println("数据库连接关闭失败"); // 30行
+			System.out.println("Failed Closing"); // 30行
 		}
 	}
 }
