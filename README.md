@@ -38,13 +38,13 @@ project.html 主页面
 
 # Data-MYSQL
 
-src文件下的dbConnecton做数据库的链接，包括用户名和密码
+src文件下的dbConnecton做数据库的链接，其中包括用户名和密码
 
 createMYSQL.java 进行数据库的建立
 
 insertData中包括了data.json和insertData.java用来做初始的数据的导入和数据插入
 
-function.java中包括了增删查改（指标和数据）的函数：
+function.java中包括了增删查改（指标和数据）的**函数**：
 
 addIndex(String s1, String s2, String s3) 插入指标下的数据
 
