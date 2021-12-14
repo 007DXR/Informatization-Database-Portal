@@ -19,20 +19,20 @@ public class JDBCConnection
 		try
 		{
 			Class.forName("com.mysql.cj.jdbc.Driver");
-			// System.out.println("正在建立数据库连接……");
+			System.out.print("Connecting...");
 			connection = DriverManager.getConnection(
 					"jdbc:mysql://localhost:3306/showdata?useUnicode=true&characterEncoding=utf-8&useSSL=true&serverTimezone=Asia/Shanghai",
 					"java21a", "1234");
 
-			// System.out.println("数据库连接成功");
+			System.out.println("finished");
 		} // 15行
 		catch (ClassNotFoundException ex)
 		{// 找不到数据库驱动程序
-			System.out.println("No JDBC Driver");
+			System.out.println("\nNo JDBC Driver");
 		}
 		catch (SQLException ex)
 		{// 不能连接到数据库
-			System.out.println("Failed Connecting"); // 20行
+			System.out.println("\nFailed Connecting"); // 20行
 		}
 	}
 
@@ -40,13 +40,13 @@ public class JDBCConnection
 	{ // 关闭数据库连接
 		try
 		{
-			// System.out.println("正在关闭数据库连接……"); // 25行
+			System.out.print("Database Connection Closing..."); 
 			connection.close();
-			// System.out.println("数据库连接关闭成功");
+			System.out.println("Closed.");
 		}
 		catch (Exception e)
 		{
-			System.out.println("Failed Closing"); // 30行
+			System.out.println("\nFailed Closing"); // 30行
 		}
 	}
 }
