@@ -3,8 +3,8 @@ package mysql.createMYSQL;
 import java.sql.SQLException;
 import java.sql.Statement;
 
-import createStmt.CreateStatement;
-import dbConnection.JDBCConnection;
+import mysql.createStmt.CreateStatement;
+import mysql.dbConnection.JDBCConnection;
 
 public class createMYSQL
 {

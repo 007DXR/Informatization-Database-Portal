@@ -13,14 +13,12 @@ import java.util.List;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 
-import createStmt.CreateStatement;
-import dbConnection.JDBCConnection;
-import insertData.insertData;
+import mysql.createStmt.CreateStatement;
+import mysql.dbConnection.JDBCConnection;
+import mysql.insertData.insertData;
 
-public class function
-{
-	public static void main(String[] args) throws SQLException
-	{
+public class function {
+	public static void main(String[] args) throws SQLException {
 		// test:
 		// addIndex("信息基础设施_A-1", "带宽水平_A-11", "拥有宽带无线网接入的公共场所比例_A-113");
 		// addRecord("信息基础设施_A-1", "通信和网络接入成本_A-12",
@@ -28,7 +26,7 @@ public class function
 		// deleteRecord(25);
 		// modifyRecord(0, "法国", "2020", 1);
 		// modifyIndex("信息基础设施", "xinxijichusheshi");
-		// inquireRecord(0);
+		inquireRecord(0);
 		// inquireIndex("信息基础设施", "带宽水平", "互联网用户的平均上网带宽");
 	}
 
@@ -40,8 +38,7 @@ public class function
 	 * @param s3_三级指标名称
 	 * @throws SQLException
 	 */
-	public static void addIndex(String s1, String s2, String s3) throws SQLException
-	{
+	public static void addIndex(String s1, String s2, String s3) throws SQLException {
 		Statement stmt;
 		JDBCConnection dc = new JDBCConnection();// 建立数据库连接
 		CreateStatement cst = new CreateStatement(dc);// 创建语句对象
@@ -64,8 +61,7 @@ public class function
 		ResultSet rs1 = stmt.executeQuery(sql1);
 		if (rs1.next()) // 已经存在
 			indexid[0] = rs1.getInt("IndexID");
-		else
-		{// 不存在则进行插入并进行id的查询
+		else {// 不存在则进行插入并进行id的查询
 			String s = "INSERT IGNORE INTO firstindex (IndexID,IndexName,IndexNumeration) Values (null,'" + str1[0]
 					+ "','" + str1[1] + "')";
 			stmt.executeUpdate(s);// 发送SQL语句
@@ -81,8 +77,7 @@ public class function
 		ResultSet rs2 = stmt.executeQuery(sql2);
 		if (rs2.next()) // 已经存在
 			indexid[1] = rs2.getInt("IndexID");
-		else
-		{
+		else {
 			String ss = "INSERT IGNORE INTO secondindex (IndexID,IndexName,IndexNumeration) Values (null,'" + str2[0]
 					+ "','" + str2[1] + "')";
 			stmt.executeUpdate(ss);// 发送SQL语句
@@ -98,8 +93,7 @@ public class function
 		ResultSet rs3 = stmt.executeQuery(sql3);
 		if (rs3.next()) // 已经存在
 			indexid[2] = rs3.getInt("IndexID");
-		else
-		{
+		else {
 			String sss = "INSERT IGNORE INTO thirdindex (IndexID,IndexName,IndexNumeration) Values (null,'" + str3[0]
 					+ "','" + str3[1] + "')";
 			stmt.executeUpdate(sss);// 发送SQL语句
@@ -111,8 +105,7 @@ public class function
 		rs3.close();
 
 		// 对数据的插入
-		for (int u = 0; u < list.size(); u++)
-		{
+		for (int u = 0; u < list.size(); u++) {
 			insertData data = list.get(u);
 			String lists = "INSERT IGNORE INTO records (dataID, Country, Year,FirstIndexID,SecondIndexID,ThirdIndexID,IndexValue) Values ('"
 					+ data.id + "','" + data.country + "','" + data.year + "','" + indexid[0] + "','" + indexid[1]
@@ -127,17 +120,16 @@ public class function
 	 * 插入已在数据库中的指标下的特定一条记录id的数据
 	 * 
 	 * @param s1
-	 *            一级指标名称（格式是名称+编号的格式）
+	 *           一级指标名称（格式是名称+编号的格式）
 	 * @param s2
-	 *            二级指标名称
+	 *           二级指标名称
 	 * @param s3
-	 *            三级指标名称
+	 *           三级指标名称
 	 * @param id
-	 *            要插入的记录的id
+	 *           要插入的记录的id
 	 * @throws SQLException
 	 */
-	public static void addRecord(String s1, String s2, String s3, int id) throws SQLException
-	{
+	public static void addRecord(String s1, String s2, String s3, int id) throws SQLException {
 		Statement stmt;
 		JDBCConnection dc = new JDBCConnection();// 建立数据库连接
 		CreateStatement cst = new CreateStatement(dc);// 创建语句对象
@@ -176,8 +168,7 @@ public class function
 		rs3.close();
 
 		// 对数据的插入
-		for (int u = 0; u < list.size(); u++)
-		{
+		for (int u = 0; u < list.size(); u++) {
 			insertData data = list.get(u);
 			if (data.id != id)
 				continue;
@@ -197,8 +188,7 @@ public class function
 	 * @param id——记录编号
 	 * @throws SQLException
 	 */
-	public static void deleteRecord(int id) throws SQLException
-	{
+	public static void deleteRecord(int id) throws SQLException {
 		Statement stmt;
 		JDBCConnection dc = new JDBCConnection();// 建立数据库连接
 		CreateStatement cst = new CreateStatement(dc);// 创建语句对象
@@ -213,8 +203,7 @@ public class function
 	/**
 	 * 修改指定记录id的记录信息,因为java不支持设置参数默认值，所以如果不修改country和year则传入""，如果不修改value则传入-1
 	 */
-	public static void modifyRecord(int id, String country, String year, double value) throws SQLException
-	{
+	public static void modifyRecord(int id, String country, String year, double value) throws SQLException {
 		Statement stmt;
 		JDBCConnection dc = new JDBCConnection();// 建立数据库连接
 		CreateStatement cst = new CreateStatement(dc);// 创建语句对象
@@ -225,15 +214,13 @@ public class function
 		// 还要判断逗号
 		if (country.equals(""))
 			s[0] = "";
-		else
-		{
+		else {
 			s[0] = "Country='" + country + "'";
 			cnt++;
 		}
 		if (year.equals(""))
 			s[1] = "";
-		else
-		{
+		else {
 			if (cnt != 0)
 				s[1] += ",";
 			s[1] += "Year='" + year + "'";
@@ -241,8 +228,7 @@ public class function
 		}
 		if (value == -1)
 			s[2] = "";
-		else
-		{
+		else {
 			if (cnt != 0)
 				s[2] += ",";
 			s[2] += "IndexValue=" + value;
@@ -258,8 +244,7 @@ public class function
 	/**
 	 * 改指标名称 before->after （这初步是一个不带编号的单纯的指标名称的修改）
 	 */
-	public static void modifyIndex(String before, String after) throws SQLException
-	{
+	public static void modifyIndex(String before, String after) throws SQLException {
 		// 先在指标的表中查到这个指标 再进行更改
 		Statement stmt;
 		JDBCConnection dc = new JDBCConnection();// 建立数据库连接
@@ -305,8 +290,7 @@ public class function
 	 * @param id
 	 * @throws SQLException
 	 */
-	public static void inquireRecord(int id) throws SQLException
-	{
+	public static void inquireRecord(int id) throws SQLException {
 		Statement stmt;
 		JDBCConnection dc = new JDBCConnection();// 建立数据库连接
 		CreateStatement cst = new CreateStatement(dc);// 创建语句对象
@@ -350,6 +334,7 @@ public class function
 					IndexName[2], rs.getDouble("IndexValue")));
 			rs.close();
 		}
+		System.out.println(listOfData);
 		String jsonOutput = JSON.toJSONString(listOfData);
 		writeToFile(jsonOutput, "src/query_a_data.json");
 		cst.close();// 关闭语句对象
@@ -364,8 +349,7 @@ public class function
 	 * @param s3
 	 * @throws SQLException
 	 */
-	public static void inquireIndex(String s1, String s2, String s3) throws SQLException
-	{
+	public static void inquireIndex(String s1, String s2, String s3) throws SQLException {
 		Statement stmt;
 		JDBCConnection dc = new JDBCConnection();// 建立数据库连接
 		CreateStatement cst = new CreateStatement(dc);// 创建语句对象
@@ -410,17 +394,12 @@ public class function
 	/**
 	 * 将字符串str写入文件的操作
 	 */
-	public static void writeToFile(String str, String fileName)
-	{
+	public static void writeToFile(String str, String fileName) {
 		File file = new File(fileName);
-		try
-		{
-			if (!file.exists())
-			{
+		try {
+			if (!file.exists()) {
 				file.createNewFile();
-			}
-			else
-			{
+			} else {
 				file.delete();
 				file.createNewFile();
 			}
@@ -428,16 +407,13 @@ public class function
 			BufferedWriter bufferWritter = new BufferedWriter(fileWritter);
 			bufferWritter.write(str);
 			bufferWritter.close();
-		}
-		catch (IOException e)
-		{
+		} catch (IOException e) {
 			e.printStackTrace();
 		}
 	}
 }
 
-class Data
-{
+class Data {
 	public int record_id;
 	public String country_name;
 	public String year;
@@ -447,8 +423,7 @@ class Data
 	public double data_value;
 
 	public Data(int record_id, String country_name, String year, String first_index, String second_index,
-			String third_index, double data_value)
-	{
+			String third_index, double data_value) {
 		this.record_id = record_id;
 		this.country_name = country_name;
 		this.year = year;
@@ -456,5 +431,12 @@ class Data
 		this.second_index = second_index;
 		this.third_index = third_index;
 		this.data_value = data_value;
+	}
+
+	@Override
+	public String toString() {
+		return String.format(
+				"{record_id:%d, country_name:%s, year:%s, first_index:%s, second_index:%s, third_index:%s, data_value:%f}",
+				record_id, country_name, year, first_index, second_index, third_index, data_value);
 	}
 }

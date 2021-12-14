@@ -11,8 +11,8 @@ import java.util.List;
 import com.alibaba.fastjson.JSONObject;
 import com.alibaba.fastjson.annotation.JSONField;
 
-import createStmt.CreateStatement;
-import dbConnection.JDBCConnection;
+import mysql.createStmt.CreateStatement;
+import mysql.dbConnection.JDBCConnection;
 
 public class insertData
 {
