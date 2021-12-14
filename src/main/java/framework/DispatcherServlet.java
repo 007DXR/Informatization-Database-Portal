@@ -22,6 +22,7 @@ import org.slf4j.LoggerFactory;
 
 import controller.IndexController;
 import controller.UserController;
+import controller.VisualController;
 
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -36,7 +37,7 @@ public class DispatcherServlet extends HttpServlet {
 	private Map<String, PostDispatcher> postMappings = new HashMap<>();
 
 	// TODO: 可指定package并自动扫描:
-	private List<Class<?>> controllers = List.of(IndexController.class, UserController.class);
+	private List<Class<?>> controllers = List.of(IndexController.class, UserController.class, VisualController.class);
 
 	private ViewEngine viewEngine;
 
