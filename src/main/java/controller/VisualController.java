@@ -2,6 +2,7 @@ package controller;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.SQLException;
 
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -22,19 +23,22 @@ public class VisualController {
 
 	@PostMapping("/visual/inquiry")
 	public ModelAndView doInquiry(VisualInfoBean bean, HttpServletResponse response, HttpSession session)
-			throws IOException {
-
-		if (bean.first_index == null || (bean.third_index != null && bean.second_index == null)) {
+			throws IOException, SQLException {
+		response.setContentType("application/json");
+		PrintWriter pw = response.getWriter();
+		if (bean.first_index == null || bean.second_index == null || bean.third_index == null) {
+			pw.write("{\"error\":\"Index not Complete\"}");
+		} 
+		// else if ((bean.country_name != null && bean.year == null) 
+		// || (bean.country_name==null && bean.year!=null)){
+		// 	pw.write("{\"error\":\"Record Info not Complete\"}");
+		// } 
+		else {
 			response.setContentType("application/json");
-			PrintWriter pw = response.getWriter();
-			pw.write("{\"error\":\"指标缺级\"}");
-			pw.flush();
-		} else {
-			response.setContentType("application/json");
-			PrintWriter pw = response.getWriter();
-			pw.write("{\"result\":\"查询成功\"}");
-			pw.flush();
+			String result = mysql.function.inquireIndex(bean.first_index, bean.second_index, bean.third_index);
+			pw.write(String.format("{\"result\":\"Success!\", \"data\":%s}", result));
 		}
+		pw.flush();
 		return null;
 	}
 }

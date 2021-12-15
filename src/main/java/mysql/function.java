@@ -191,6 +191,7 @@ public class function {
 		JDBCConnection dc = new JDBCConnection();// 建立数据库连接
 		CreateStatement cst = new CreateStatement(dc);// 创建语句对象
 		stmt = cst.stmt;
+
 		// 获得指标id
 		int[] indexid = new int[3];
 		String sql1 = "SELECT IndexID FROM firstindex WHERE IndexName = '" + s1 + "'";// 10行
@@ -199,7 +200,7 @@ public class function {
 			indexid[0] = rs1.getInt("IndexID");
 		rs1.close();
 
-		String sql2 = "SELECT IndexID FROM secondindex WHERE IndexName = '" + s2 + "'";// 10行
+		String sql2 = "SELECT IndexID FROM secondindex WHERE IndexName = '" + s2+ "'";// 10行
 		ResultSet rs2 = stmt.executeQuery(sql2);
 		if (rs2.next()) // 已经存在
 			indexid[1] = rs2.getInt("IndexID");
@@ -308,7 +309,7 @@ public class function {
 	 * @param id
 	 * @throws SQLException
 	 */
-	public static void inquireRecord(int id) throws SQLException {
+	public static String inquireRecord(int id) throws SQLException {
 		Statement stmt;
 		JDBCConnection dc = new JDBCConnection();// 建立数据库连接
 		CreateStatement cst = new CreateStatement(dc);// 创建语句对象
@@ -357,11 +358,12 @@ public class function {
 		writeToFile(jsonOutput, dataRoot + "query_a_data.json");
 		cst.close();// 关闭语句对象
 		dc.close();// 关闭数据库连接
+		return jsonOutput;
 	}
 	/**
 	 * 给定指标、国家、年份查询具体的一条记录 返回一个json数据 包括id,国家，年份，指标名称不含编号（一级二级三级）和得分
 	 */
-	public static void inquireRecord(String s1, String s2, String s3, String country, String year) throws SQLException
+	public static String inquireRecord(String s1, String s2, String s3, String country, String year) throws SQLException
 	{
 		Statement stmt;
 		JDBCConnection dc = new JDBCConnection();// 建立数据库连接
@@ -400,6 +402,7 @@ public class function {
 		writeToFile(jsonOutput, "src/query_a_data.json");
 		cst.close();// 关闭语句对象
 		dc.close();// 关闭数据库连接
+		return jsonOutput;
 	}
 
 	/**
@@ -410,27 +413,31 @@ public class function {
 	 * @param s3
 	 * @throws SQLException
 	 */
-	public static void inquireIndex(String s1, String s2, String s3) throws SQLException {
+	public static String inquireIndex(String s1, String s2, String s3) throws SQLException {
 		Statement stmt;
 		JDBCConnection dc = new JDBCConnection();// 建立数据库连接
 		CreateStatement cst = new CreateStatement(dc);// 创建语句对象
 		stmt = cst.stmt;
 
+		String indexname1 = s1.split("_")[0];
+		String indexname2 = s2.split("_")[0];
+		String indexname3 = s3.split("_")[0];
 		// 知道指标名称查找指标的id
 		int[] indexid = new int[3];
-		String sql1 = "SELECT IndexID FROM firstindex WHERE IndexName = '" + s1 + "'";// 10行
+		String sql1 = "SELECT IndexID FROM firstindex WHERE IndexName = '" + indexname1 + "'";// 10行
 		ResultSet rs1 = stmt.executeQuery(sql1);
+		System.out.println(sql1);
 		if (rs1.next()) // 已经存在
 			indexid[0] = rs1.getInt("IndexID");
 		rs1.close();
 
-		String sql2 = "SELECT IndexID FROM secondindex WHERE IndexName = '" + s2 + "'";// 10行
+		String sql2 = "SELECT IndexID FROM secondindex WHERE IndexName = '" + indexname2 + "'";// 10行
 		ResultSet rs2 = stmt.executeQuery(sql2);
 		if (rs2.next()) // 已经存在
 			indexid[1] = rs2.getInt("IndexID");
 		rs2.close();
 
-		String sql3 = "SELECT IndexID FROM thirdindex WHERE IndexName = '" + s3 + "'";// 10行
+		String sql3 = "SELECT IndexID FROM thirdindex WHERE IndexName = '" + indexname3 + "'";// 10行
 		ResultSet rs3 = stmt.executeQuery(sql3);
 		if (rs3.next()) // 已经存在
 			indexid[2] = rs3.getInt("IndexID");
@@ -439,6 +446,7 @@ public class function {
 		// 根据指标id进行select
 		String sqlQuery = "SELECT * FROM records WHERE FirstIndexID=" + indexid[0] + " AND SecondIndexID=" + indexid[1]
 				+ " AND ThirdIndexID=" + indexid[2];
+		System.out.println(sqlQuery);
 		ResultSet rs = stmt.executeQuery(sqlQuery);
 		List<Data> listOfData = new ArrayList<Data>();
 		while (rs.next())
@@ -450,6 +458,7 @@ public class function {
 		rs.close();
 		cst.close();// 关闭语句对象
 		dc.close();// 关闭数据库连接
+		return jsonOutput;
 	}
 
 	/**
