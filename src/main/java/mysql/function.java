@@ -370,21 +370,24 @@ public class function {
 		CreateStatement cst = new CreateStatement(dc);// 创建语句对象
 		stmt = cst.stmt;
 
+		String indexname1 = s1.split("_")[0];
+		String indexname2 = s2.split("_")[0];
+		String indexname3 = s3.split("_")[0];
 		// 根据指标名称获得指标id
 		int[] indexid = new int[3];
-		String sql1 = "SELECT IndexID FROM firstindex WHERE IndexName = '" + s1 + "'";// 10行
+		String sql1 = "SELECT IndexID FROM firstindex WHERE IndexName = '" + indexname1 + "'";// 10行
 		ResultSet rs1 = stmt.executeQuery(sql1);
 		if (rs1.next()) // 已经存在
 			indexid[0] = rs1.getInt("IndexID");
 		rs1.close();
 
-		String sql2 = "SELECT IndexID FROM secondindex WHERE IndexName = '" + s2 + "'";// 10行
+		String sql2 = "SELECT IndexID FROM secondindex WHERE IndexName = '" + indexname2 + "'";// 10行
 		ResultSet rs2 = stmt.executeQuery(sql2);
 		if (rs2.next()) // 已经存在
 			indexid[1] = rs2.getInt("IndexID");
 		rs2.close();
 
-		String sql3 = "SELECT IndexID FROM thirdindex WHERE IndexName = '" + s3 + "'";// 10行
+		String sql3 = "SELECT IndexID FROM thirdindex WHERE IndexName = '" + indexname3 + "'";// 10行
 		ResultSet rs3 = stmt.executeQuery(sql3);
 		if (rs3.next()) // 已经存在
 			indexid[2] = rs3.getInt("IndexID");
@@ -426,7 +429,6 @@ public class function {
 		int[] indexid = new int[3];
 		String sql1 = "SELECT IndexID FROM firstindex WHERE IndexName = '" + indexname1 + "'";// 10行
 		ResultSet rs1 = stmt.executeQuery(sql1);
-		System.out.println(sql1);
 		if (rs1.next()) // 已经存在
 			indexid[0] = rs1.getInt("IndexID");
 		rs1.close();
@@ -446,11 +448,11 @@ public class function {
 		// 根据指标id进行select
 		String sqlQuery = "SELECT * FROM records WHERE FirstIndexID=" + indexid[0] + " AND SecondIndexID=" + indexid[1]
 				+ " AND ThirdIndexID=" + indexid[2];
-		System.out.println(sqlQuery);
+		// System.out.println(sqlQuery);
 		ResultSet rs = stmt.executeQuery(sqlQuery);
 		List<Data> listOfData = new ArrayList<Data>();
 		while (rs.next())
-			listOfData.add(new Data(rs.getInt("dataID"), rs.getString("Country"), rs.getString("Year"), s1, s2, s3,
+			listOfData.add(new Data(rs.getInt("dataID"), rs.getString("Country"), rs.getString("Year"), indexname1, indexname2, indexname3,
 					rs.getDouble("IndexValue")));
 
 		String jsonOutput = JSON.toJSONString(listOfData);
