@@ -1,4 +1,4 @@
-package mysql.function;
+package mysql;
 
 import java.io.BufferedWriter;
 import java.io.File;
@@ -13,23 +13,8 @@ import java.util.List;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 
-import mysql.createStmt.CreateStatement;
-import mysql.dbConnection.JDBCConnection;
-import mysql.insertData.insertData;
-
 public class function {
 	public static String dataRoot = "data/";
-	public static void main(String[] args) throws SQLException {
-		// test:
-		// addIndex("信息基础设施_A-1", "带宽水平_A-11", "拥有宽带无线网接入的公共场所比例_A-113");
-		// addRecord("信息基础设施_A-1", "通信和网络接入成本_A-12",
-		// "固网宽带互联网接入资费占人均收入的比重_A-123", 25);
-		// deleteRecord(25);
-		// modifyRecord(0, "法国", "2020", 1);
-		// modifyIndex("信息基础设施", "xinxijichusheshi");
-		// inquireRecord(0);
-		inquireIndex("信息基础设施", "带宽水平", "互联网用户的平均上网带宽");
-	}
 
 	/**
 	 * 插入一个指标下的所有数据
@@ -200,6 +185,38 @@ public class function {
 		cst.close();// 关闭语句对象
 		dc.close();// 关闭数据库连接
 	}
+	public static void deleteRecord(String s1, String s2, String s3, String country, String year) throws SQLException
+	{
+		Statement stmt;
+		JDBCConnection dc = new JDBCConnection();// 建立数据库连接
+		CreateStatement cst = new CreateStatement(dc);// 创建语句对象
+		stmt = cst.stmt;
+		// 获得指标id
+		int[] indexid = new int[3];
+		String sql1 = "SELECT IndexID FROM firstindex WHERE IndexName = '" + s1 + "'";// 10行
+		ResultSet rs1 = stmt.executeQuery(sql1);
+		if (rs1.next()) // 已经存在
+			indexid[0] = rs1.getInt("IndexID");
+		rs1.close();
+
+		String sql2 = "SELECT IndexID FROM secondindex WHERE IndexName = '" + s2 + "'";// 10行
+		ResultSet rs2 = stmt.executeQuery(sql2);
+		if (rs2.next()) // 已经存在
+			indexid[1] = rs2.getInt("IndexID");
+		rs2.close();
+
+		String sql3 = "SELECT IndexID FROM thirdindex WHERE IndexName = '" + s3 + "'";// 10行
+		ResultSet rs3 = stmt.executeQuery(sql3);
+		if (rs3.next()) // 已经存在
+			indexid[2] = rs3.getInt("IndexID");
+		rs3.close();
+
+		String sql = "DELETE FROM records WHERE FirstIndexID=" + indexid[0] + " AND SecondIndexID=" + indexid[1]
+				+ " AND ThirdIndexID=" + indexid[2] + " AND Country='" + country + "' AND Year='" + year + "'";
+		stmt.executeUpdate(sql);
+		cst.close();// 关闭语句对象
+		dc.close();// 关闭数据库连接
+	}
 
 	/**
 	 * 修改指定记录id的记录信息,因为java不支持设置参数默认值，所以如果不修改country和year则传入""，如果不修改value则传入-1
@@ -338,6 +355,49 @@ public class function {
 		System.out.println(listOfData);
 		String jsonOutput = JSON.toJSONString(listOfData);
 		writeToFile(jsonOutput, dataRoot + "query_a_data.json");
+		cst.close();// 关闭语句对象
+		dc.close();// 关闭数据库连接
+	}
+	/**
+	 * 给定指标、国家、年份查询具体的一条记录 返回一个json数据 包括id,国家，年份，指标名称不含编号（一级二级三级）和得分
+	 */
+	public static void inquireRecord(String s1, String s2, String s3, String country, String year) throws SQLException
+	{
+		Statement stmt;
+		JDBCConnection dc = new JDBCConnection();// 建立数据库连接
+		CreateStatement cst = new CreateStatement(dc);// 创建语句对象
+		stmt = cst.stmt;
+
+		// 根据指标名称获得指标id
+		int[] indexid = new int[3];
+		String sql1 = "SELECT IndexID FROM firstindex WHERE IndexName = '" + s1 + "'";// 10行
+		ResultSet rs1 = stmt.executeQuery(sql1);
+		if (rs1.next()) // 已经存在
+			indexid[0] = rs1.getInt("IndexID");
+		rs1.close();
+
+		String sql2 = "SELECT IndexID FROM secondindex WHERE IndexName = '" + s2 + "'";// 10行
+		ResultSet rs2 = stmt.executeQuery(sql2);
+		if (rs2.next()) // 已经存在
+			indexid[1] = rs2.getInt("IndexID");
+		rs2.close();
+
+		String sql3 = "SELECT IndexID FROM thirdindex WHERE IndexName = '" + s3 + "'";// 10行
+		ResultSet rs3 = stmt.executeQuery(sql3);
+		if (rs3.next()) // 已经存在
+			indexid[2] = rs3.getInt("IndexID");
+		rs3.close();
+
+		String sql = "SELECT * FROM records WHERE FirstIndexID=" + indexid[0] + " AND SecondIndexID=" + indexid[1]
+				+ " AND ThirdIndexID=" + indexid[2] + " AND Country='" + country + "' AND Year='" + year + "'";
+		List<Data> listOfData = new ArrayList<Data>();
+		ResultSet rs = stmt.executeQuery(sql);
+		rs.next();
+		listOfData.add(new Data(rs.getInt("dataID"), country, year, s1, s2, s3, rs.getDouble("IndexValue")));
+		rs.close();
+
+		String jsonOutput = JSON.toJSONString(listOfData);
+		writeToFile(jsonOutput, "src/query_a_data.json");
 		cst.close();// 关闭语句对象
 		dc.close();// 关闭数据库连接
 	}

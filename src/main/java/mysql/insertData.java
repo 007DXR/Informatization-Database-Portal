@@ -1,4 +1,4 @@
-package mysql.insertData;
+package mysql;
 
 import java.io.BufferedReader;
 import java.io.FileInputStream;
@@ -10,9 +10,6 @@ import java.util.List;
 
 import com.alibaba.fastjson.JSONObject;
 import com.alibaba.fastjson.annotation.JSONField;
-
-import mysql.createStmt.CreateStatement;
-import mysql.dbConnection.JDBCConnection;
 
 public class insertData
 {

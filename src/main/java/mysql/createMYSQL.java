@@ -1,10 +1,7 @@
-package mysql.createMYSQL;
+package mysql;
 
 import java.sql.SQLException;
 import java.sql.Statement;
-
-import mysql.createStmt.CreateStatement;
-import mysql.dbConnection.JDBCConnection;
 
 public class createMYSQL
 {
