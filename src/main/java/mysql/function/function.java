@@ -18,6 +18,7 @@ import mysql.dbConnection.JDBCConnection;
 import mysql.insertData.insertData;
 
 public class function {
+	public static String dataRoot = "data/";
 	public static void main(String[] args) throws SQLException {
 		// test:
 		// addIndex("信息基础设施_A-1", "带宽水平_A-11", "拥有宽带无线网接入的公共场所比例_A-113");
@@ -44,7 +45,7 @@ public class function {
 		CreateStatement cst = new CreateStatement(dc);// 创建语句对象
 		stmt = cst.stmt;
 
-		String str = insertData.ReadFile("src/insertData/data.json"); // 注意路径的问题
+		String str = insertData.ReadFile(dataRoot + "data.json"); // 注意路径的问题
 		JSONObject jsonObject = JSONObject.parseObject(str);
 		String strA = jsonObject.getString(s1); // 得到一级指标的json值
 		JSONObject jsonObjectB = JSONObject.parseObject(strA);
@@ -135,7 +136,7 @@ public class function {
 		CreateStatement cst = new CreateStatement(dc);// 创建语句对象
 		stmt = cst.stmt;
 
-		String str = insertData.ReadFile("src/insertData/data.json"); // 注意路径的问题
+		String str = insertData.ReadFile(dataRoot + "data.json"); // 注意路径的问题
 		JSONObject jsonObject = JSONObject.parseObject(str);
 		String strA = jsonObject.getString(s1); // 得到一级指标的json值
 		JSONObject jsonObjectB = JSONObject.parseObject(strA);
@@ -336,7 +337,7 @@ public class function {
 		}
 		System.out.println(listOfData);
 		String jsonOutput = JSON.toJSONString(listOfData);
-		writeToFile(jsonOutput, "src/query_a_data.json");
+		writeToFile(jsonOutput, dataRoot + "query_a_data.json");
 		cst.close();// 关闭语句对象
 		dc.close();// 关闭数据库连接
 	}
@@ -385,7 +386,7 @@ public class function {
 					rs.getDouble("IndexValue")));
 
 		String jsonOutput = JSON.toJSONString(listOfData);
-		writeToFile(jsonOutput, "src/query_Index.json");
+		writeToFile(jsonOutput, dataRoot + "query_Index.json");
 		rs.close();
 		cst.close();// 关闭语句对象
 		dc.close();// 关闭数据库连接

@@ -24,15 +24,16 @@ public class insertData
 	public double value;
 	@JSONField(name = "年份")
 	public String year;
-
+	
 	public static void main(String[] args) throws SQLException
 	{
+		String dataRoot = "data/";
 		Statement stmt; // 连接一波数据库
 		JDBCConnection dc = new JDBCConnection();// 建立数据库连接
 		CreateStatement cst = new CreateStatement(dc);// 创建语句对象
 		stmt = cst.stmt;
 
-		String str = ReadFile("src/insertData/data.json"); // 注意路径的问题
+		String str = ReadFile(dataRoot + "data.json"); // 注意路径的问题
 		JSONObject jsonObject = JSONObject.parseObject(str);
 		String first[] = new String[] { "信息基础设施_A-1", "信息化环境_B-1" };
 		String second[] = new String[] { "带宽水平_A-11", "通信和网络接入成本_A-12", "居民素质_B-11", "经济环境_B-13", };
