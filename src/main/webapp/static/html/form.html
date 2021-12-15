@@ -14,6 +14,35 @@
 </head>
 
 <body>
+  <script>
+    $(function () {
+      $('#submit').click(function (e) {
+        e.preventDefault();
+        var data = {
+          first_index: $('#select1').val(),
+          second_index: $('#select2').val(),
+          third_index: $('#select3').val(),
+          
+          password: $('#password').val()
+        };
+        $.ajax({
+          type: 'POST',
+          url: '/signin',
+          data: JSON.stringify(data),
+          success: function (resp) {
+            if (resp.error) {
+              $('#error').text(resp.error);
+            } else {
+              location.assign('/');
+            }
+          },
+          contentType: 'application/json',
+          dataType: 'json'
+        });
+      });
+    });
+  </script>
+
   <form class="form-horizontal">
     <div class="form-group">
       <label for="level1" class="col-sm-2 control-label">一级指标</label>
@@ -78,7 +107,7 @@
         <input type="text" class="form-control" id="year" placeholder="">
       </div>
     </div>
-    
+
     <div class="form-group">
       <div class="col-sm-offset-2 col-sm-10">
         <button id="submit" type="submit" class="btn btn-default">修改</button>
@@ -86,7 +115,7 @@
         <button id="delete" type="submit" class="btn btn-default">删除</button>
         <button id="query" type="submit" class="btn btn-default">查询</button>
       </div>
-
+      <p id="error" class="text-danger"></p>
     </div>
   </form>
   <script src="/static/js/data.json"></script>
