@@ -29,16 +29,14 @@ public class function
 		// modifyRecord(0, "法国", "2020", 1);
 		// modifyIndex("信息基础设施", "xinxijichusheshi");
 		// inquireRecord(0);
+		// inquireRecord("信息基础设施", "带宽水平", "互联网用户的平均上网带宽", "中国", "2019");
+		// deleteRecord(25);
+		// deleteRecord("信息基础设施", "带宽水平", "互联网用户的平均上网带宽", "法国", "2019");
 		// inquireIndex("信息基础设施", "带宽水平", "互联网用户的平均上网带宽");
 	}
 
 	/**
-	 * 插入一个指标下的所有数据
-	 * 
-	 * @param s1_一级指标名称
-	 * @param s2_二级指标名称
-	 * @param s3_三级指标名称
-	 * @throws SQLException
+	 * 插入一个指标下的所有数据（格式是名称+编号的格式）
 	 */
 	public static void addIndex(String s1, String s2, String s3) throws SQLException
 	{
@@ -124,17 +122,7 @@ public class function
 	}
 
 	/**
-	 * 插入已在数据库中的指标下的特定一条记录id的数据
-	 * 
-	 * @param s1
-	 *            一级指标名称（格式是名称+编号的格式）
-	 * @param s2
-	 *            二级指标名称
-	 * @param s3
-	 *            三级指标名称
-	 * @param id
-	 *            要插入的记录的id
-	 * @throws SQLException
+	 * 插入已在数据库中的指标下的特定一条记录id的数据 （格式是名称+编号的格式）
 	 */
 	public static void addRecord(String s1, String s2, String s3, int id) throws SQLException
 	{
@@ -193,9 +181,6 @@ public class function
 
 	/**
 	 * 删除一条记录
-	 * 
-	 * @param id——记录编号
-	 * @throws SQLException
 	 */
 	public static void deleteRecord(int id) throws SQLException
 	{
@@ -205,6 +190,39 @@ public class function
 		stmt = cst.stmt;
 
 		String sql = "DELETE FROM records WHERE dataID=" + id;// 10行
+		stmt.executeUpdate(sql);
+		cst.close();// 关闭语句对象
+		dc.close();// 关闭数据库连接
+	}
+
+	public static void deleteRecord(String s1, String s2, String s3, String country, String year) throws SQLException
+	{
+		Statement stmt;
+		JDBCConnection dc = new JDBCConnection();// 建立数据库连接
+		CreateStatement cst = new CreateStatement(dc);// 创建语句对象
+		stmt = cst.stmt;
+		// 获得指标id
+		int[] indexid = new int[3];
+		String sql1 = "SELECT IndexID FROM firstindex WHERE IndexName = '" + s1 + "'";// 10行
+		ResultSet rs1 = stmt.executeQuery(sql1);
+		if (rs1.next()) // 已经存在
+			indexid[0] = rs1.getInt("IndexID");
+		rs1.close();
+
+		String sql2 = "SELECT IndexID FROM secondindex WHERE IndexName = '" + s2 + "'";// 10行
+		ResultSet rs2 = stmt.executeQuery(sql2);
+		if (rs2.next()) // 已经存在
+			indexid[1] = rs2.getInt("IndexID");
+		rs2.close();
+
+		String sql3 = "SELECT IndexID FROM thirdindex WHERE IndexName = '" + s3 + "'";// 10行
+		ResultSet rs3 = stmt.executeQuery(sql3);
+		if (rs3.next()) // 已经存在
+			indexid[2] = rs3.getInt("IndexID");
+		rs3.close();
+
+		String sql = "DELETE FROM records WHERE FirstIndexID=" + indexid[0] + " AND SecondIndexID=" + indexid[1]
+				+ " AND ThirdIndexID=" + indexid[2] + " AND Country='" + country + "' AND Year='" + year + "'";
 		stmt.executeUpdate(sql);
 		cst.close();// 关闭语句对象
 		dc.close();// 关闭数据库连接
@@ -222,7 +240,6 @@ public class function
 
 		String s[] = { "", "", "" };
 		int cnt = 0;
-		// 还要判断逗号
 		if (country.equals(""))
 			s[0] = "";
 		else
@@ -301,9 +318,6 @@ public class function
 
 	/**
 	 * 查询给定id的具体的一条记录 返回一个json数据 包括id,国家，年份，指标名称不含编号（一级二级三级）和得分
-	 * 
-	 * @param id
-	 * @throws SQLException
 	 */
 	public static void inquireRecord(int id) throws SQLException
 	{
@@ -351,6 +365,50 @@ public class function
 			rs.close();
 		}
 		String jsonOutput = JSON.toJSONString(listOfData);
+		writeToFile(jsonOutput, "src/query_id_data.json");
+		cst.close();// 关闭语句对象
+		dc.close();// 关闭数据库连接
+	}
+
+	/**
+	 * 给定指标、国家、年份查询具体的一条记录 返回一个json数据 包括id,国家，年份，指标名称不含编号（一级二级三级）和得分
+	 */
+	public static void inquireRecord(String s1, String s2, String s3, String country, String year) throws SQLException
+	{
+		Statement stmt;
+		JDBCConnection dc = new JDBCConnection();// 建立数据库连接
+		CreateStatement cst = new CreateStatement(dc);// 创建语句对象
+		stmt = cst.stmt;
+
+		// 根据指标名称获得指标id
+		int[] indexid = new int[3];
+		String sql1 = "SELECT IndexID FROM firstindex WHERE IndexName = '" + s1 + "'";// 10行
+		ResultSet rs1 = stmt.executeQuery(sql1);
+		if (rs1.next()) // 已经存在
+			indexid[0] = rs1.getInt("IndexID");
+		rs1.close();
+
+		String sql2 = "SELECT IndexID FROM secondindex WHERE IndexName = '" + s2 + "'";// 10行
+		ResultSet rs2 = stmt.executeQuery(sql2);
+		if (rs2.next()) // 已经存在
+			indexid[1] = rs2.getInt("IndexID");
+		rs2.close();
+
+		String sql3 = "SELECT IndexID FROM thirdindex WHERE IndexName = '" + s3 + "'";// 10行
+		ResultSet rs3 = stmt.executeQuery(sql3);
+		if (rs3.next()) // 已经存在
+			indexid[2] = rs3.getInt("IndexID");
+		rs3.close();
+
+		String sql = "SELECT * FROM records WHERE FirstIndexID=" + indexid[0] + " AND SecondIndexID=" + indexid[1]
+				+ " AND ThirdIndexID=" + indexid[2] + " AND Country='" + country + "' AND Year='" + year + "'";
+		List<Data> listOfData = new ArrayList<Data>();
+		ResultSet rs = stmt.executeQuery(sql);
+		rs.next();
+		listOfData.add(new Data(rs.getInt("dataID"), country, year, s1, s2, s3, rs.getDouble("IndexValue")));
+		rs.close();
+
+		String jsonOutput = JSON.toJSONString(listOfData);
 		writeToFile(jsonOutput, "src/query_a_data.json");
 		cst.close();// 关闭语句对象
 		dc.close();// 关闭数据库连接
@@ -358,11 +416,6 @@ public class function
 
 	/**
 	 * 查询给定指标名称下的数据，返回json数据文件
-	 * 
-	 * @param s1
-	 * @param s2
-	 * @param s3
-	 * @throws SQLException
 	 */
 	public static void inquireIndex(String s1, String s2, String s3) throws SQLException
 	{
