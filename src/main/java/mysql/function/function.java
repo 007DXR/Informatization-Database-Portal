@@ -27,8 +27,8 @@ public class function {
 		// deleteRecord(25);
 		// modifyRecord(0, "法国", "2020", 1);
 		// modifyIndex("信息基础设施", "xinxijichusheshi");
-		inquireRecord(0);
-		// inquireIndex("信息基础设施", "带宽水平", "互联网用户的平均上网带宽");
+		// inquireRecord(0);
+		inquireIndex("信息基础设施", "带宽水平", "互联网用户的平均上网带宽");
 	}
 
 	/**
