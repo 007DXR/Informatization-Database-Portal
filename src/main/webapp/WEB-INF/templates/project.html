@@ -1,0 +1,24 @@
+{% extends "_base.html" %}
+
+{% block head%}
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<script src="/static/js/jquery.min.js"></script>
+<script src="/static/js/data.json"></script>
+<script src="/static/js/echarts.min.js"></script>
+<script src="/static/js/filter.js"></script>
+{% endblock %}
+
+{% block main %}
+{% if user == null %}
+<h3>没有权限</h3>
+{% else %}
+<!-- <iframe src="/static/html/form.html" style="width:800px; height:800px; top:50px;left:800px; position:absolute"frameborder="0"></iframe> -->
+<iframe src="/static/html/form.html" style="width:800px; height:400px" frameborder="0"></iframe>
+<div id="treemap" style="width:800px; height:400px"></div>
+<div id="line" style="width:800px; height:400px"></div>
+<script src="/static/js/treemap.js"></script>
+<script src="/static/js/line.js"></script>
+{% endif %}
+{% endblock %}
