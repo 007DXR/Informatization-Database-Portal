@@ -16,6 +16,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.commons.io.IOUtils;
+
 @WebServlet(urlPatterns = { "/favicon.ico", "/static/*" })
 public class FileServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -44,7 +46,7 @@ public class FileServlet extends HttpServlet {
 		// 读取文件并写入Response:
 		OutputStream output = resp.getOutputStream();
 		try (InputStream input = new BufferedInputStream(new FileInputStream(filepath))) {
-			input.transferTo(output);
+			IOUtils.copy(input, output);
 		}
 		output.flush();
 	}

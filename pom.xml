@@ -19,6 +19,7 @@
 		<tomcat.version>9.0.55</tomcat.version>
 		<fastjson.version>1.2.78</fastjson.version>
 		<mysql.version>8.0.27</mysql.version>
+		<commons-io.version>2.4</commons-io.version>
 	</properties>
 
 	<dependencies>
@@ -63,6 +64,11 @@
 			<groupId>mysql</groupId>
 			<artifactId>mysql-connector-java</artifactId>
 			<version>${mysql.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>commons-io</groupId>
+			<artifactId>commons-io</artifactId>
+			<version>${commons-io.version}</version>
 		</dependency>
 	</dependencies>
 

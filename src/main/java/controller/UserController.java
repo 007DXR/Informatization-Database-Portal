@@ -5,6 +5,8 @@ import java.io.PrintWriter;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -19,10 +21,10 @@ public class UserController {
 
 	private Map<String, User> userDatabase = new HashMap<String, User>() {
 		{
-			List<User> users = List.of( //
+			List<User> users = Stream.of( //
 					new User("bob@example.com", "bob123", "Bob", "This is bob."),
 					new User("tom@example.com", "tomcat", "Tom", "This is tom."),
-					new User("fhn@pku.edu.cn",  "fhn123", "Haonian", "Service End Developer."));
+					new User("fhn@pku.edu.cn",  "fhn123", "Haonian", "Service End Developer.")).collect(Collectors.toList());
 			users.forEach(user -> {
 				put(user.email, user);
 			});

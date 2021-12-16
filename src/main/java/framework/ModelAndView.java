@@ -10,7 +10,7 @@ public class ModelAndView {
 
 	public ModelAndView(String view) {
 		this.view = view;
-		this.model = Map.of();
+		this.model = new HashMap<>();
 	}
 
 	public ModelAndView(String view, String name, Object value) {

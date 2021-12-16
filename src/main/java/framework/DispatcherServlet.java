@@ -9,6 +9,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -37,7 +39,7 @@ public class DispatcherServlet extends HttpServlet {
 	private Map<String, PostDispatcher> postMappings = new HashMap<>();
 
 	// TODO: 可指定package并自动扫描:
-	private List<Class<?>> controllers = List.of(IndexController.class, UserController.class, VisualController.class);
+	private List<Class<?>> controllers = Stream.of(IndexController.class, UserController.class, VisualController.class).collect(Collectors.toList());
 
 	private ViewEngine viewEngine;
 
@@ -142,11 +144,11 @@ public class DispatcherServlet extends HttpServlet {
 		pw.flush();
 	}
 
-	private static final Set<Class<?>> supportedGetParameterTypes = Set.of(int.class, long.class, boolean.class,
-			String.class, HttpServletRequest.class, HttpServletResponse.class, HttpSession.class);
+	private static final Set<Class<?>> supportedGetParameterTypes = Stream.of(int.class, long.class, boolean.class,
+			String.class, HttpServletRequest.class, HttpServletResponse.class, HttpSession.class).collect(Collectors.toSet());
 
-	private static final Set<Class<?>> supportedPostParameterTypes = Set.of(HttpServletRequest.class,
-			HttpServletResponse.class, HttpSession.class);
+	private static final Set<Class<?>> supportedPostParameterTypes = Stream.of(HttpServletRequest.class,
+			HttpServletResponse.class, HttpSession.class).collect(Collectors.toSet());
 }
 
 abstract class AbstractDispatcher {
