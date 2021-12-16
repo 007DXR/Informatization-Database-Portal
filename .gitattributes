@@ -1,2 +1,7 @@
 # When shell scripts end in CRLF, bash gives a cryptic error message
 *.sh text eol=lf
+dxr/echarts.min.js linguist-vendored
+dxr/jquery.min.js linguist-vendored
+src/main/webapp/static/js/bootstrap* linguist-vendored
+src/main/webapp/static/js/echarts.min.js linguist-vendored
+src/main/webapp/static/js/jquery.js linguist-vendored

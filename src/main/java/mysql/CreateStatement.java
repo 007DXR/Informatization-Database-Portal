@@ -1,10 +1,8 @@
-package mysql.createStmt;//1行	
+package mysql;//1行	
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-
-import mysql.dbConnection.JDBCConnection;
 
 public class CreateStatement
 {

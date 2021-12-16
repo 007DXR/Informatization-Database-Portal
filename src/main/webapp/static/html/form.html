@@ -1,39 +1,42 @@
 <!doctype html>
-<html lang="zh-CN">
+<html>
 
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
-  <title>Bootstrap 101 Template</title>
+  <title>查询表单</title>
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css"
     integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu" crossorigin="anonymous">
-
-
+  <script src="/static/js/jquery.js"></script>
+  <script src="/static/js/bootstrap.min.js"></script>
+  <script src="/static/js/prefilter.js"></script>
 </head>
 
 <body>
+  
+  
   <form class="form-horizontal">
     <div class="form-group">
       <label for="level1" class="col-sm-2 control-label">一级指标</label>
       <div class="col-sm-1"> <select id="select1" class="form-control">
-          <option selected>新建</option>
-          <option id="信息基础设施_A-1">信息基础设施</option>
-          <option id='信息化环境_B-1'>信息化环境</option>
-          <option id='应用状况_C-1'>应用状况</option>
-
-        </select></div>
+        <option selected>新建</option>
+        <option id="信息基础设施_A-1">信息基础设施</option>
+        <option id='信息化环境_B-1'>信息化环境</option>
+        <option id='应用状况_C-1'>应用状况</option>
+        
+      </select></div>
       <div class="col-sm-8">
         <input type="text" class="form-control" id="level1" placeholder="一级指标">
       </div>
     </div>
-
+    
     <div class="form-group">
       <label for="level2" class="col-sm-2 control-label">二级指标</label>
       <div class="col-sm-1"> <select id="select2" class="form-control">
-
-        </select></div>
+        
+      </select></div>
       <div class="col-sm-8">
         <input type="text" class="form-control" id="level2" placeholder="二级指标">
       </div>
@@ -41,39 +44,39 @@
     <div class="form-group">
       <label for="level3" class="col-sm-2 control-label">三级指标</label>
       <div class="col-sm-1"> <select id="select3" class="form-control">
-
-        </select></div>
+        
+      </select></div>
       <div class="col-sm-8">
         <input type="text" class="form-control" id="level3" placeholder="三级指标">
       </div>
     </div>
     <!-- <div class="form-group">
       <label for="recordID" class="col-sm-2 control-label">记录ID</label>
-
-
+      
+      
       <div class="col-sm-9">
         <input type="text" class="form-control" id="recordID" placeholder="二级指标">
       </div>
     </div> -->
     <div class="form-group">
       <label for="country" class="col-sm-2 control-label">国家</label>
-
-
+      
+      
       <div class="col-sm-8">
         <input type="text" class="form-control" id="country" placeholder="">
       </div>
     </div>
     <div class="form-group">
       <label for="value" class="col-sm-2 control-label">得分</label>
-
-
+      
+      
       <div class="col-sm-8">
         <input type="text" class="form-control" id="value" placeholder="">
       </div>
     </div>
     <div class="form-group">
       <label for="year" class="col-sm-2 control-label">年份</label>
-
+      
       <div class="col-sm-8">
         <input type="text" class="form-control" id="year" placeholder="">
       </div>
@@ -86,20 +89,29 @@
         <button id="delete" type="submit" class="btn btn-default">删除</button>
         <button id="query" type="submit" class="btn btn-default">查询</button>
       </div>
-
     </div>
   </form>
+  <div>
+    <p id="error" class="text-danger"></p>
+    <p id="resp"></p>
+  </div>
+  <table id="query-result" visibility="hidden" class="table table-striped table-hover table-bordered">
+    <thead>
+      <th>记录ID</th>
+      <th>一级指标</th>
+      <th>二级指标</th>
+      <th>三级指标</th>
+      <th>国家</th>
+      <th>年份</th>
+      <th>指标值</th>
+    </thead>
+    <tbody id="query-body"> </tbody>
+  </table>
+  
   <script src="/static/js/data.json"></script>
   <script src="/static/js/filter.js"></script>
   <script src="/static/js/form.js"></script>
-  <!-- jQuery (Bootstrap 的所有 JavaScript 插件都依赖 jQuery，所以必须放在前边) -->
-  <script src="https://cdn.jsdelivr.net/npm/jquery@1.12.4/dist/jquery.min.js"
-    integrity="sha384-nvAa0+6Qg9clwYCGGPpDQLVpLNn0fRaROjHqs13t4Ggj3Ez50XnGQqc/r8MhnRDZ"
-    crossorigin="anonymous"></script>
-  <!-- 加载 Bootstrap 的所有 JavaScript 插件。你也可以根据需要只加载单个插件。 -->
-  <script src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"
-    integrity="sha384-aJ21OjlMXNL5UyIl/XNwTMqvzeRMZH2w8c5cRVpzpU8Y5bApTppSuUkhZXN0VxHd"
-    crossorigin="anonymous"></script>
+  <script src="/static/js/ajax.js"></script>
 </body>
 
 </html>
