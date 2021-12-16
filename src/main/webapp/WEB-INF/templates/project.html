@@ -7,6 +7,7 @@
 <script src="/static/js/jquery.min.js"></script>
 <script src="/static/js/data.json"></script>
 <script src="/static/js/echarts.min.js"></script>
+<script src="/static/js/prefilter.js"></script>
 <script src="/static/js/filter.js"></script>
 {% endblock %}
 
@@ -14,8 +15,7 @@
 {% if user == null %}
 <h3>没有权限</h3>
 {% else %}
-<!-- <iframe src="/static/html/form.html" style="width:800px; height:800px; top:50px;left:800px; position:absolute"frameborder="0"></iframe> -->
-<iframe src="/static/html/form.html" style="width:800px; height:400px" frameborder="0"></iframe>
+<iframe src="/static/html/form.html" style="width:800px; height:380px" frameborder="0"></iframe>
 <div id="treemap" style="width:800px; height:400px"></div>
 <div id="line" style="width:800px; height:400px"></div>
 <script src="/static/js/treemap.js"></script>

@@ -49,5 +49,5 @@ function transform(rawData, filterData) {
 }
 filterData = {}
 listData = []
-transform(rawData[0], filterData)
+transform(rawData, filterData)
 console.log(filterData)
