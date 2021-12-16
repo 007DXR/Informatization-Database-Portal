@@ -19,7 +19,7 @@
 		<tomcat.version>9.0.55</tomcat.version>
 		<fastjson.version>1.2.78</fastjson.version>
 		<mysql.version>8.0.27</mysql.version>
-		<commons-io.version>2.4</commons-io.version>
+		<commons-io.version>2.11.0</commons-io.version>
 	</properties>
 
 	<dependencies>
