@@ -17,12 +17,12 @@ import framework.PostMapping;
 
 public class UserController {
 
-	private Map<String, User> userDatabase = new HashMap<>() {
+	private Map<String, User> userDatabase = new HashMap<String, User>() {
 		{
 			List<User> users = List.of( //
 					new User("bob@example.com", "bob123", "Bob", "This is bob."),
 					new User("tom@example.com", "tomcat", "Tom", "This is tom."),
-					new User("fhn@pku.edu.cn",  "fhn123", "Haonian", "Service Front Developer."));
+					new User("fhn@pku.edu.cn",  "fhn123", "Haonian", "Service End Developer."));
 			users.forEach(user -> {
 				put(user.email, user);
 			});
