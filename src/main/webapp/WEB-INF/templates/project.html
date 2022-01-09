@@ -1,5 +1,5 @@
 {% extends "_base.html" %}
-{% extends "overview.html" %}
+<!-- {% extends "overview.html" %} -->
 {% block head%}
 <meta charset="UTF-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -23,7 +23,7 @@
 <div class="col-sm-6">
     <form class="form-horizontal">
         <div class="form-group">
-            <label for="level1" class="col-xs-2 control-label">一级指标</label>
+            <label for="level1" class="col-xs-3 control-label">一级指标</label>
             <div class="col-xs-1"> <select id="select1" class="form-control">
                     <option selected>新建</option>
                     <option id="信息基础设施_A-1">信息基础设施</option>
@@ -37,7 +37,7 @@
         </div>
 
         <div class="form-group">
-            <label for="level2" class="col-xs-2 control-label">二级指标</label>
+            <label for="level2" class="col-xs-3 control-label">二级指标</label>
             <div class="col-xs-1"> <select id="select2" class="form-control">
 
                 </select></div>
@@ -46,7 +46,7 @@
             </div>
         </div>
         <div class="form-group">
-            <label for="level3" class="col-xs-2 control-label">三级指标</label>
+            <label for="level3" class="col-xs-3 control-label">三级指标</label>
             <div class="col-xs-1"> <select id="select3" class="form-control">
 
                 </select></div>
@@ -54,16 +54,16 @@
                 <input type="text" class="form-control" id="level3" placeholder="三级指标">
             </div>
         </div>
-        <!-- <div class="form-group">
-          <label for="recordID" class="col-xs-2 control-label">记录ID</label>
+        <div class="form-group">
+          <label for="recordID" class="col-xs-3 control-label">记录ID</label>
           
           
           <div class="col-xs-9">
-            <input type="text" class="form-control" id="recordID" placeholder="二级指标">
+            <input type="text" class="form-control" id="recordID">
           </div>
-        </div> -->
+        </div>
         <div class="form-group">
-            <label for="country" class="col-xs-2 control-label">国家</label>
+            <label for="country" class="col-xs-3 control-label">国家</label>
 
 
             <div class="col-xs-8">
@@ -71,7 +71,7 @@
             </div>
         </div>
         <div class="form-group">
-            <label for="value" class="col-xs-2 control-label">得分</label>
+            <label for="value" class="col-xs-3 control-label">得分</label>
 
 
             <div class="col-xs-8">
@@ -79,7 +79,7 @@
             </div>
         </div>
         <div class="form-group">
-            <label for="year" class="col-xs-2 control-label">年份</label>
+            <label for="year" class="col-xs-3 control-label">年份</label>
 
             <div class="col-xs-8">
                 <input type="text" class="form-control" id="year" placeholder="">
