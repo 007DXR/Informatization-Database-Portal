@@ -2,21 +2,20 @@
 <html>
 
 <head>
-  <meta charset="utf-8">
   {% block head %}
   {% endblock %}
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <title>数据门户</title>
-  <script src="/static/js/jquery.js"></script>
   <link href="/static/css/bootstrap.css" rel="stylesheet">
+  <title>数据门户</title> 
 </head>
 
 <body style="font-size:16px">
+  <!-- {% block header %}
+  {% endblock %} -->
   <div class="d-flex flex-column flex-md-row align-items-center p-3 px-md-4 mb-3 bg-white border-bottom shadow-sm">
-    <h5 class="my-0 mr-md-auto font-weight-normal"><a href="/">Home</a></h5>
+    <h5 class="my-0 mr-md-auto font-weight-normal"><a href="_base.html">Home</a></h5>
     <nav class="my-2 mr-md-3">
-      <a class="p-2 text-dark" target="_blank" href="https://www.liaoxuefeng.com/wiki/1252599548343744">Learn</a>
-      <a class="p-2 text-dark" target="_blank" href="#">Source</a>
+        <a class="p-2 text-dark" target="_blank" href="/overview.html">Overview</a>
+        <a class="p-2 text-dark" target="_blank" href="#">Detail</a>
     </nav>
     {% if user==null %}
     <a href="/signin" class="btn btn-outline-primary">Sign In</a>
@@ -25,14 +24,18 @@
     &nbsp;&nbsp;&nbsp;
     <a href="/signout" class="btn btn-outline-primary">Sign Out</a>
     {% endif %}
-  </div>
-
-  <div class="container" style="max-width: 960px">
+</div>
+  <div class="container" >
     <div class="row">
-      <div class="col-12 col-md">
+      {% block main %}
+      {% endblock %}
+      <!-- <div class="col-sm-6">
         {% block main %}
         {% endblock %}
       </div>
+      <div class="col-sm-6">
+        <iframe src="/static/html/form.html" style="margin: 0px; width:100%; height:800px; overflow-x:hidden; overflow-y:auto" frameborder="0"></iframe>
+      </div> -->
     </div>
 
     <footer class="pt-4 my-md-5 pt-md-5 border-top">
