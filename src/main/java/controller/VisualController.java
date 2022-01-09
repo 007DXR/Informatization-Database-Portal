@@ -41,4 +41,22 @@ public class VisualController {
 		pw.flush();
 		return null;
 	}
+
+	@PostMapping("/visual/update")
+	public ModelAndView doUpdate(VisualInfoBean bean, HttpServletResponse response, HttpSession session)
+			throws IOException, SQLException {
+		response.setContentType("application/json");
+		PrintWriter pw = response.getWriter();
+		if (bean.country_name == "" && bean.year == "" && bean.data_value == -1) {
+			pw.write("{\"error\":\"Index not Complete\"}");
+		} else if (bean.record_id < 0) {
+			pw.write("{\"error\":\"Record ID Illegal\"}");
+		} else {
+			response.setContentType("application/json");
+			mysql.function.modifyRecord(bean.record_id, bean.country_name, bean.year, bean.data_value);
+			pw.write("{\"result\":\"Success!\"}");
+		}
+		pw.flush();
+		return null;
+	}
 }

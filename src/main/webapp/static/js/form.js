@@ -90,7 +90,6 @@ document.getElementById("submit").onclick = function () {
                             pos=pos[k].children
                             pos.push({asdf:23})
                             flag = 1
-                            alert("scc")
                             console.log(pos)
                         }
                     }
