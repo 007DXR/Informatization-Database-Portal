@@ -22,7 +22,6 @@ public class function {
 	 * @param s1_一级指标名称
 	 * @param s2_二级指标名称
 	 * @param s3_三级指标名称
-	 * @throws SQLException
 	 */
 	public static void addIndex(String s1, String s2, String s3) throws SQLException {
 		Statement stmt;
@@ -103,17 +102,7 @@ public class function {
 	}
 
 	/**
-	 * 插入已在数据库中的指标下的特定一条记录id的数据
-	 * 
-	 * @param s1
-	 *           一级指标名称（格式是名称+编号的格式）
-	 * @param s2
-	 *           二级指标名称
-	 * @param s3
-	 *           三级指标名称
-	 * @param id
-	 *           要插入的记录的id
-	 * @throws SQLException
+	 * 插入已在数据库中的指标下的特定一条记录id的数据 指标名称（格式是名称+编号的格式）
 	 */
 	public static void addRecord(String s1, String s2, String s3, int id) throws SQLException {
 		Statement stmt;
@@ -167,7 +156,79 @@ public class function {
 		cst.close();// 关闭语句对象
 		dc.close();// 关闭数据库连接
 	}
+    
+    /**
+	 * 指标是名称加编号的格式 且是对数据库中已经存在的指标进行数据插入，若指标不存在则向指标表中新增这个指标 
+	 */
+	public static void addRecord(String s1, String s2, String s3, int id, double value, String country, String year)
+			throws SQLException
+	{
+		Statement stmt;
+		JDBCConnection dc = new JDBCConnection();// 建立数据库连接
+		CreateStatement cst = new CreateStatement(dc);// 创建语句对象
+		stmt = cst.stmt;
 
+		int[] indexid = new int[3];
+		String[] str1 = s1.split("_");
+		String sql1 = "SELECT IndexID FROM firstindex WHERE IndexName = '" + str1[0] + "'";// 10行
+		ResultSet rs1 = stmt.executeQuery(sql1);
+		if (rs1.next())
+			indexid[0] = rs1.getInt("IndexID");
+		else // 指标不存在
+		{
+			String sss = "INSERT IGNORE INTO firstindex (IndexID,IndexName,IndexNumeration) Values (null,'" + str1[0]
+					+ "','" + str1[1] + "')";
+			stmt.executeUpdate(sss);// 发送SQL语句
+			ResultSet rs11 = stmt.executeQuery(sql1);
+			if (rs11.next()) // 有结果
+				indexid[0] = rs11.getInt("IndexID");
+			rs11.close();
+		}
+		rs1.close();
+
+		String[] str2 = s2.split("_");
+		String sql2 = "SELECT IndexID FROM secondindex WHERE IndexName = '" + str2[0] + "'";// 10行
+		ResultSet rs2 = stmt.executeQuery(sql2);
+		if (rs2.next()) // 已经存在
+			indexid[1] = rs2.getInt("IndexID");
+		else
+		{
+			String sss = "INSERT IGNORE INTO secondindex (IndexID,IndexName,IndexNumeration) Values (null,'" + str2[0]
+					+ "','" + str2[1] + "')";
+			stmt.executeUpdate(sss);// 发送SQL语句
+			ResultSet rs22 = stmt.executeQuery(sql2);
+			if (rs22.next()) // 有结果
+				indexid[1] = rs22.getInt("IndexID");
+			rs22.close();
+		}
+		rs2.close();
+
+		String[] str3 = s3.split("_");
+		String sql3 = "SELECT IndexID FROM thirdindex WHERE IndexName = '" + str3[0] + "'";// 10行
+		ResultSet rs3 = stmt.executeQuery(sql3);
+		if (rs3.next()) // 已经存在
+			indexid[2] = rs3.getInt("IndexID");
+		else
+		{
+			String sss = "INSERT IGNORE INTO thirdindex (IndexID,IndexName,IndexNumeration) Values (null,'" + str3[0]
+					+ "','" + str3[1] + "')";
+			stmt.executeUpdate(sss);// 发送SQL语句
+			ResultSet rs33 = stmt.executeQuery(sql3);
+			if (rs33.next()) // 有结果
+				indexid[2] = rs33.getInt("IndexID");
+			rs33.close();
+		}
+		rs3.close();
+
+		// 对数据的插入
+		String insertsql = "INSERT IGNORE INTO records (dataID, Country, Year,FirstIndexID,SecondIndexID,ThirdIndexID,IndexValue) Values ('"
+				+ id + "','" + country + "','" + year + "','" + indexid[0] + "','" + indexid[1] + "','" + indexid[2]
+				+ "','" + value + "')";
+		stmt.executeUpdate(insertsql);
+
+		cst.close();// 关闭语句对象
+		dc.close();// 关闭数据库连接
+	}
 	/**
 	 * 删除一条记录
 	 * 
