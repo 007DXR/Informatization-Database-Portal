@@ -21,12 +21,37 @@ $(function () {
                     $('#error').text(resp.error);
                 } else {
                     drawTable(resp.data);
-                    prefilteredData = prefilter(resp.data);
+                    rawData = prefilter(resp.data);
                     $('#resp').text(resp.result);
                     $('#error').text();
-                    console.log("prefilteredData:");
-                    console.log(prefilteredData);
-                    rawData = prefilteredData;
+                    // console.log("prefilteredData:");
+                    console.log(resp.data);
+                    // rawData = prefilteredData;
+                    pieCount = 0;
+                    // if (data['year']==null){
+                    //     DrawPie(resp.data,'year');
+                    // }
+                    // if (data['country_name']==null){
+                    //     DrawPie(resp.data,'country_name');
+                    // }
+                    DrawPie(resp.data, 'year');
+                    DrawPie(resp.data, 'country_name');
+                    if (data['first_index'] == null) {
+                        DrawPie(resp.data, 'first_index');
+                    } else {
+                        if (data['second_index'] == null) {
+                            DrawPie(resp.data, 'second_index');
+                        } else {
+                            // DrawPie(resp.data,'third_index');
+                            if (data['third_index'] == null) {
+                                DrawPie(resp.data, 'third_index');
+                            } else {
+                                let x = document.getElementById('pie3')
+                                
+                                x.style.visibility = "hidden";
+                            }
+                        }
+                    }
                 }
             },
             contentType: 'application/json;charset=utf-8',
@@ -65,6 +90,6 @@ function drawTable(respData) {
         row.appendChild(td7);
         tbody.appendChild(row);
     }
-    
+
     table.replaceChild(tbody, table.children[1]);
 }
