@@ -21,7 +21,7 @@ $(function () {
             data: JSON.stringify(data),
             success: function (resp) {
                 if (resp.error) {
-                    $('#resp').text();
+                    $('#resp').text("");
                     $('#error').text(resp.error);
                     alert(resp.error)
                 } else {

@@ -24,6 +24,17 @@ public class IndexController {
 		return new ModelAndView("/index.html", paramMap);
 	}
 
+	@GetMapping("/overview")
+	public ModelAndView overview(HttpSession session)
+		throws SQLException {
+			User user = (User) session.getAttribute("user");
+			String result = mysql.function.inquireRecords();
+			Map<String, Object> paramMap = new HashMap<String, Object>();
+			paramMap.put("user", user);
+			paramMap.put("rawData", result);
+			return new ModelAndView("/overview.html", paramMap);
+		}
+
 	@GetMapping("/hello")
 	public ModelAndView hello(String name) {
 		if (name == null) {
