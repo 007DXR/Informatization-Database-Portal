@@ -60,6 +60,24 @@ public class VisualController {
 		return null;
 	}
 
+	@PostMapping("/visual/add")
+	public ModelAndView doAdd(VisualInfoBean bean, HttpServletResponse response, HttpSession session)
+			throws IOException, SQLException {
+		response.setContentType("application/json");
+		PrintWriter pw = response.getWriter();
+		if (bean.first_index == "" || bean.second_index == "" || bean.third_index == "" || bean.country_name == ""
+				|| bean.year == "" || bean.data_value == -1) {
+			pw.write("\"error\":\"Index not Complete\"");
+		} else if (bean.record_id < 0) {
+			pw.write("{\"error\":\"Record ID Illegal\"}");
+		} else {
+			response.setContentType("application/json");
+			mysql.function.addRecord(bean.first_index, bean.second_index, bean.third_index, bean.record_id,
+					bean.data_value, bean.country_name, bean.year);
+		}
+		return null;
+	}
+
 	@GetMapping("/visual/refresh")
 	public ModelAndView doRefresh(HttpServletResponse response, HttpSession session)
 		throws IOException, SQLException {

@@ -1,4 +1,41 @@
 $(function () {
+    $('#addition').click(function (e) {
+        e.preventDefault();
+        var data = {
+            first_index: $('#level1').val(),
+            second_index: $('#level2').val(),
+            third_index: $('#level3').val(),
+            country_name: $('#country').val(),
+            data_value: $('#value').val(),
+            year: $('#year').val(),
+            record_id: $('#recordID').val()
+        };
+        if (data.data_value == ""){
+            data.data_value = -1;
+        }
+        console.log("请求:")
+        console.log(data)
+        $.ajax({
+            type: 'POST',
+            url: '/visual/add',
+            data: JSON.stringify(data),
+            success: function (resp) {
+                if (resp.error) {
+                    $('#resp').text("");
+                    $('#error').text(resp.error);
+                    alert(resp.error)
+                } else {
+                    $('#resp').text(resp.result);
+                    $('#error').text("");
+                }
+            },
+            contentType: 'application/json;charset=utf-8',
+            dataType: 'json'
+        });
+    });
+});
+
+$(function () {
     $('#submit').click(function (e) {
         e.preventDefault();
         var data = {
