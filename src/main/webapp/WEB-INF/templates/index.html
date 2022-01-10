@@ -9,6 +9,28 @@
 
 <h4><br><a href="/visual">>>进入查询</a></h4>
 
+<br>
+<script src="/static/js/jquery.js"></script>
+<div class="col-sm-12">
+    <div id="treemap" style="width:100%; height:400px"></div>
+    <div id="line" style="width:100%; height:400px"></div>
+</div>
+
+
+<script src="/static/js/echarts.min.js"></script>
+<script src="/static/js/prefilter.js"></script>
+{% set danger = "alert(...)" %}
+<script>
+    var yearList = [2019, 2020, 2021]
+    var countryList = ['中国', "法国", "英国", "俄罗斯", "美国"]
+    var tmpData = {{rawData|raw}};
+    var rawData = prefilter(tmpData)
+</script>
+
+<script src="/static/js/filter.js"></script>
+<script src="/static/js/treemap.js"></script>
+<script src="/static/js/line.js"></script>
+
 
 {% endif %}
 

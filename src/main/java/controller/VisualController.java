@@ -59,4 +59,16 @@ public class VisualController {
 		pw.flush();
 		return null;
 	}
+
+	@GetMapping("/visual/refresh")
+	public ModelAndView doRefresh(HttpServletResponse response, HttpSession session)
+		throws IOException, SQLException {
+			response.setContentType("application/json");
+			PrintWriter pw = response.getWriter();
+			String result = mysql.function.inquireRecords();
+			pw.write(String.format("\"data\":%s", result));
+			pw.flush();
+			return null;
+		}
+
 }

@@ -525,6 +525,40 @@ public class function {
 	}
 
 	/**
+	 * 读取所有记录
+	 * 
+	 * @throws SQLException
+	 */
+	public static String inquireRecords() throws SQLException {
+		Statement stmt;
+		JDBCConnection dc = new JDBCConnection();// 建立数据库连接
+		CreateStatement cst = new CreateStatement(dc);// 创建语句对象
+		stmt = cst.stmt;
+
+		// 根据指标id进行select
+		String sqlQuery = "SELECT r.dataId, r.Country, r.Year,"
+				+ " r.FirstIndexID, i1.IndexName FirstIndexName, r.SecondIndexID, i2.IndexName SecondIndexName, r.ThirdIndexID, i3.IndexName ThirdIndexName,"
+				+ " r.IndexValue FROM"
+				+ "((records r INNER JOIN firstindex i1 ON r.FirstIndexID=i1.IndexID)"
+				+ "INNER JOIN secondindex i2 ON r.SecondIndexID=i2.IndexID)"
+				+ "INNER JOIN thirdindex i3 ON r.ThirdIndexID=i3.IndexID";
+		ResultSet rs = stmt.executeQuery(sqlQuery);
+		List<Data> listOfData = new ArrayList<Data>();
+		while (rs.next()) {
+			listOfData.add(new Data(rs.getInt("dataID"), rs.getString("Country"), rs.getString("Year"),
+					rs.getString("FirstIndexName"), rs.getString("SecondIndexName"), rs.getString("ThirdIndexName"),
+					rs.getDouble("IndexValue")));
+		}
+
+		String jsonOutput = JSON.toJSONString(listOfData);
+		writeToFile(jsonOutput, dataRoot + "query_Index.json");
+		rs.close();
+		cst.close();// 关闭语句对象
+		dc.close();// 关闭数据库连接
+		return jsonOutput;
+	}
+
+	/**
 	 * 将字符串str写入文件的操作
 	 */
 	public static void writeToFile(String str, String fileName) {

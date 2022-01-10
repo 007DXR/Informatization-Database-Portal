@@ -1,5 +1,9 @@
 package controller;
 
+import java.sql.SQLException;
+import java.util.HashMap;
+import java.util.Map;
+
 import javax.servlet.http.HttpSession;
 
 import bean.User;
@@ -9,9 +13,15 @@ import framework.ModelAndView;
 public class IndexController {
 
 	@GetMapping("/")
-	public ModelAndView index(HttpSession session) {
+	public ModelAndView index(HttpSession session)
+			throws SQLException {
 		User user = (User) session.getAttribute("user");
-		return new ModelAndView("/index.html", "user", user);
+		String result = mysql.function.inquireRecords();
+		Map<String, Object> paramMap = new HashMap<String, Object>();
+		paramMap.put("user", user);
+		paramMap.put("rawData", result);
+
+		return new ModelAndView("/index.html", paramMap);
 	}
 
 	@GetMapping("/hello")
