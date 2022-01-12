@@ -1,32 +1,16 @@
 {% extends "_base.html" %}
-<!-- {% extends "overview.html" %} -->
-{% block head%}
-<meta charset="UTF-8">
-<meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<script src="/static/js/jquery.js"></script>
-<!-- <script src="/static/js/data.json"></script>
-<script src="/static/js/echarts.min.js"></script>
-<script src="/static/js/prefilter.js"></script>
-<script src="/static/js/filter.js"></script>
-<script src="/static/js/pie.js"></script> -->
-<!-- 为了提升网页速度将上述script移到尾部 -->
-<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css"
-    integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu" crossorigin="anonymous">
-    <link href="/static/css/bootstrap.css" rel="stylesheet">
-    <script src="/static/js/bootstrap.min.js"></script>
-{% endblock %}
 
 {% block main %}
 {% if user == null %}
 <h3>没有权限</h3>
 {% else %}
+
 <div class="col-sm-6">
     <form class="form-horizontal">
         <div class="form-group">
             <label for="level1" class="col-xs-3 control-label">一级指标</label>
             <div class="col-xs-1"> <select id="select1" class="form-control">
-                    <option selected>新建</option>
+                    <option id="empty1" selected>清空</option>
                     <option id="信息基础设施_A-1">信息基础设施</option>
                     <option id='信息化环境_B-1'>信息化环境</option>
                     <option id='应用状况_C-1'>应用状况</option>
@@ -56,18 +40,18 @@
             </div>
         </div>
         <div class="form-group">
-          <label for="recordID" class="col-xs-3 control-label">记录ID</label>
-          
-          
-          <div class="col-xs-9">
-            <input type="text" class="form-control" id="recordID">
-          </div>
+            <label for="recordID" class="col-xs-3 control-label">记录ID</label>
+
+
+            <div class="col-xs-9">
+                <input type="text" class="form-control" id="recordID">
+            </div>
         </div>
         <div class="form-group">
             <label for="country" class="col-xs-3 control-label">国家</label>
 
 
-            <div class="col-xs-8">
+            <div class="col-xs-9">
                 <input type="text" class="form-control" id="country" placeholder="">
             </div>
         </div>
@@ -75,24 +59,24 @@
             <label for="value" class="col-xs-3 control-label">得分</label>
 
 
-            <div class="col-xs-8">
+            <div class="col-xs-9">
                 <input type="text" class="form-control" id="value" placeholder="">
             </div>
         </div>
         <div class="form-group">
             <label for="year" class="col-xs-3 control-label">年份</label>
 
-            <div class="col-xs-8">
+            <div class="col-xs-9">
                 <input type="text" class="form-control" id="year" placeholder="">
             </div>
         </div>
 
         <div class="form-group">
-            <div class="col-xs-offset-2 col-xs-10">
-                <button id="submit" type="submit" class="btn btn-default">修改</button>
-                <button id="addition" type="submit" class="btn btn-default">增加</button>
-                <button id="delete" type="submit" class="btn btn-default">删除</button>
-                <button id="query" type="submit" class="btn btn-default">查询</button>
+            <div class="col-xs-offset-4 col-xs-12">
+                <button id="submit" type="submit" class="btn btn-primary">修改</button>
+                <button id="addition" type="submit" class="btn btn-success">增加</button>
+                <button id="delete" type="submit" class="btn btn-info">删除</button>
+                <button id="query" type="submit" class="btn btn-warning">查询</button>
             </div>
         </div>
     </form>
@@ -113,14 +97,13 @@
         <tbody id="query-body"> </tbody>
     </table>
 
-
 </div>
 <div class="col-sm-6">
     <div id="pie1" style="width:100%; height:250px"></div>
     <div id="pie2" style="width:100%; height:250px"></div>
-    <div id="pie3" style="width:100%; height:200px"></div>
-    <div id="treemap" style="width:100%; height:400px"></div>
-    <div id="line" style="width:100%; height:400px"></div>
+    <div id="pie3" style="width:100%; height:250px"></div>
+    <!-- <div id="treemap" style="width:100%; height:400px"></div>
+    <div id="line" style="width:100%; height:400px"></div> -->
 </div>
 <!-- <iframe src="/static/html/form.html" style="position: relative;; right:800px; width:800px; height:380px; overflow-x:hidden; overflow-y:auto" frameborder="0"></iframe> -->
 <script src="/static/js/data.json"></script>
@@ -129,8 +112,8 @@
 <script src="/static/js/form.js"></script>
 <script src="/static/js/echarts.min.js"></script>
 <script src="/static/js/ajax.js"></script>
-<script src="/static/js/treemap.js"></script>
-<script src="/static/js/line.js"></script>
+<!-- <script src="/static/js/treemap.js"></script>
+<script src="/static/js/line.js"></script> -->
 <script src="/static/js/pie.js"></script>
 {% endif %}
 {% endblock %}
