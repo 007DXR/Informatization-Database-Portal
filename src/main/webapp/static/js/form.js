@@ -1,6 +1,9 @@
 
 function Listener3(level) {
     document.getElementById("select3").onclick = function () {
+        if (document.getElementById("empty3").selected){
+            document.getElementById("level3").value = ""
+        }
         for (var i in level) {
             var name1 = level[i].name
 
@@ -15,6 +18,9 @@ function Listener3(level) {
 }
 function Listener2(level) {
     document.getElementById("select2").onclick = function () {
+        if (document.getElementById("empty2").selected){
+            document.getElementById("level2").value = ""
+        }
         for (var i in level) {
             var name1 = level[i].name
 
@@ -27,7 +33,8 @@ function Listener2(level) {
                     // alert(select2.length)
                 }
                 var y = document.createElement('option');
-                y.text = "新建"
+                y.id = "empty3"
+                y.text = "清空"
                 select2.add(y, null)
                 for (var j in level[i].children) {
                     var name2 = level[i].children[j].name
@@ -44,6 +51,9 @@ function Listener2(level) {
 }
 function Listener1(level1) {
     document.getElementById("select1").onclick = function () {
+        if (document.getElementById("empty1").selected){
+            document.getElementById("level1").value = ""
+        }
         for (var i in level1) {
             var name1 = level1[i].name
 
@@ -56,7 +66,8 @@ function Listener1(level1) {
                     // alert(select2.length)
                 }
                 var y = document.createElement('option');
-                y.text = "新建"
+                y.id = "empty2"
+                y.text = "清空"
                 select2.add(y, null)
                 for (var j in level1[i].children) {
                     var name2 = level1[i].children[j].name

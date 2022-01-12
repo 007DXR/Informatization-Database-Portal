@@ -7,7 +7,7 @@ treemapChart = echarts.init(document.getElementById('treemap'));
 var treemapOption = {
   title: {
     text: '信息化程度评价指标体系',
-    subtext: '作者',
+    subtext: '作者：\n范皓年\n董欣然\n吴泓霖',
     left: 'leafDepth'
   },
 

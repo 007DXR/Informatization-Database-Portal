@@ -135,16 +135,10 @@ $(function () {
                     rawData = prefilter(resp.data);
                     $('#resp').text(resp.result);
                     $('#error').text();
-                    // console.log("prefilteredData:");
+
                     console.log(resp.data);
-                    // rawData = prefilteredData;
+       
                     pieCount = 0;
-                    // if (data['year']==null){
-                    //     DrawPie(resp.data,'year');
-                    // }
-                    // if (data['country_name']==null){
-                    //     DrawPie(resp.data,'country_name');
-                    // }
                     DrawPie(resp.data, 'year');
                     DrawPie(resp.data, 'country_name');
                     if (data['first_index'] == null) {
@@ -153,14 +147,14 @@ $(function () {
                         if (data['second_index'] == null) {
                             DrawPie(resp.data, 'second_index');
                         } else {
-                            // DrawPie(resp.data,'third_index');
-                            if (data['third_index'] == null) {
-                                DrawPie(resp.data, 'third_index');
-                            } else {
-                                let x = document.getElementById('pie3')
+                            DrawPie(resp.data,'third_index');
+                            // if (data['third_index'] == null) {
+                            //     DrawPie(resp.data, 'third_index');
+                            // } else {
+                            //     let x = document.getElementById('pie3')
                                 
-                                x.style.visibility = "hidden";
-                            }
+                            //     x.style.visibility = "hidden";
+                            // }
                         }
                     }
                 }
