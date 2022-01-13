@@ -26,12 +26,12 @@ $(function () {
             data: JSON.stringify(data),
             success: function (resp) {
                 if (resp.error) {
-                    $('#resp').text("");
+                    $('#resp').val("");
                     $('#error').text(resp.error);
                     alert(resp.error)
                 } else {
                     $('#resp').text(resp.result);
-                    $('#error').text("");
+                    $('#error').val("");
                     if (!idIsGiven){
                         alert("由于没有指定id，已为当前记录自动分配ID=" + resp.data.record_id);
                     }
@@ -69,12 +69,12 @@ $(function () {
             data: JSON.stringify(data),
             success: function (resp) {
                 if (resp.error) {
-                    $('#resp').text("");
+                    $('#resp').val("");
                     $('#error').text(resp.error);
                     alert(resp.error)
                 } else {
                     $('#resp').text(resp.result);
-                    $('#error').text("");
+                    $('#error').val("");
                 }
             },
             contentType: 'application/json;charset=utf-8',
@@ -106,12 +106,12 @@ $(function () {
             data: JSON.stringify(data),
             success: function (resp) {
                 if (resp.error) {
-                    $('#resp').text("");
+                    $('#resp').val("");
                     $('#error').text(resp.error);
                     alert(resp.error)
                 } else {
                     $('#resp').text(resp.result);
-                    $('#error').text();
+                    $('#error').val("");
                 }
             },
             contentType: 'application/json;charset=utf-8',
@@ -141,11 +141,12 @@ $(function () {
             success: function (resp) {
                 if (resp.error) {
                     $('#error').text(resp.error);
+                    $('#resp').val("")
                 } else {
                     drawTable(resp.data);
                     rawData = prefilter(resp.data);
                     $('#resp').text(resp.result);
-                    $('#error').text();
+                    $('#error').val("");
 
                     console.log(resp.data);
        
