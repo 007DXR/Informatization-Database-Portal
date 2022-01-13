@@ -26,12 +26,12 @@ $(function () {
             data: JSON.stringify(data),
             success: function (resp) {
                 if (resp.error) {
-                    $('#resp').val("");
+                    $('#resp').empty();
                     $('#error').text(resp.error);
                     alert(resp.error)
                 } else {
                     $('#resp').text(resp.result);
-                    $('#error').val("");
+                    $('#error').empty();
                     if (!idIsGiven){
                         alert("由于没有指定id，已为当前记录自动分配ID=" + resp.data.record_id);
                     }
@@ -69,12 +69,12 @@ $(function () {
             data: JSON.stringify(data),
             success: function (resp) {
                 if (resp.error) {
-                    $('#resp').val("");
+                    $('#resp').empty();
                     $('#error').text(resp.error);
                     alert(resp.error)
                 } else {
                     $('#resp').text(resp.result);
-                    $('#error').val("");
+                    $('#error').empty();
                 }
             },
             contentType: 'application/json;charset=utf-8',
@@ -106,12 +106,12 @@ $(function () {
             data: JSON.stringify(data),
             success: function (resp) {
                 if (resp.error) {
-                    $('#resp').val("");
+                    $('#resp').empty();
                     $('#error').text(resp.error);
                     alert(resp.error)
                 } else {
                     $('#resp').text(resp.result);
-                    $('#error').val("");
+                    $('#error').empty();
                 }
             },
             contentType: 'application/json;charset=utf-8',
@@ -141,12 +141,12 @@ $(function () {
             success: function (resp) {
                 if (resp.error) {
                     $('#error').text(resp.error);
-                    $('#resp').val("")
+                    $('#resp').empty();
                 } else {
                     drawTable(resp.data);
                     rawData = prefilter(resp.data);
                     $('#resp').text(resp.result);
-                    $('#error').val("");
+                    $('#error').empty();
 
                     console.log(resp.data);
        
