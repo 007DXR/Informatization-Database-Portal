@@ -152,22 +152,18 @@ $(function () {
                     pieCount = 0;
                     DrawPie(resp.data, 'year');
                     DrawPie(resp.data, 'country_name');
-                    if (data['first_index'] == null) {
-                        DrawPie(resp.data, 'first_index');
-                    } else {
-                        if (data['second_index'] == null) {
-                            DrawPie(resp.data, 'second_index');
-                        } else {
-                            DrawPie(resp.data,'third_index');
-                            // if (data['third_index'] == null) {
-                            //     DrawPie(resp.data, 'third_index');
-                            // } else {
-                            //     let x = document.getElementById('pie3')
-                                
-                            //     x.style.visibility = "hidden";
-                            // }
-                        }
-                    }
+                    DrawPie(resp.data, 'third_index');
+                    DrawPie(resp.data, 'second_index');
+                    DrawPie(resp.data, 'first_index');
+                    // if (data['first_index'] == null) {
+                    //     DrawPie(resp.data, 'first_index');
+                    // } else {
+                    //     if (data['second_index'] == null) {
+                    //         DrawPie(resp.data, 'second_index');
+                    //     } else {
+                    //         DrawPie(resp.data,'third_index');                       
+                    //     }
+                    // }
                 }
             },
             contentType: 'application/json;charset=utf-8',
