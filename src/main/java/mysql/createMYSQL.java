@@ -21,7 +21,7 @@ public class createMYSQL
 	// 然后创建数据表
 	public static void createTable()
 	{
-		String s1 = "CREATE TABLE IF NOT EXISTS records(dataID integer not null PRIMARY key, "
+		String s1 = "CREATE TABLE IF NOT EXISTS records(dataID integer not null AUTO_INCREMENT PRIMARY key, "
 				+ "Country varchar(10), Year char(4), FirstIndexID integer, SecondIndexID integer, ThirdIndexID integer, IndexValue double(20,16))";
 		// 表1的结构 dataID(主键),国别,年份,一级指标ID,二级指标ID,三级指标ID,指标值
 		String s2 = "CREATE TABLE IF NOT EXISTS firstindex(IndexID integer AUTO_INCREMENT PRIMARY key, "

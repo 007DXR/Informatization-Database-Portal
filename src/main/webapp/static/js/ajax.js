@@ -13,6 +13,11 @@ $(function () {
         if (data.data_value == ""){
             data.data_value = -1;
         }
+        var idIsGiven = true
+        if (data.record_id == "" || data.record_id < 0){
+            data.record_id = -1;
+            idIsGiven = false;
+        } //TODO 上限暂不考虑，如超出自增主键最大值，创建新库
         console.log("请求:")
         console.log(data)
         $.ajax({
@@ -27,6 +32,9 @@ $(function () {
                 } else {
                     $('#resp').text(resp.result);
                     $('#error').text("");
+                    if (!idIsGiven){
+                        alert("由于没有指定id，已为当前记录自动分配ID=" + resp.data.record_id);
+                    }
                 }
             },
             contentType: 'application/json;charset=utf-8',
@@ -49,6 +57,9 @@ $(function () {
         };
         if (data.data_value == ""){
             data.data_value = -1;
+        }
+        if (data.record_id == "") {
+            data.record_id = -1;
         }
         console.log("请求:")
         console.log(data)
