@@ -26,12 +26,12 @@ $(function () {
             data: JSON.stringify(data),
             success: function (resp) {
                 if (resp.error) {
-                    $('#resp').text("");
+                    $('#resp').empty();
                     $('#error').text(resp.error);
                     alert(resp.error)
                 } else {
                     $('#resp').text(resp.result);
-                    $('#error').text("");
+                    $('#error').empty();
                     if (!idIsGiven){
                         alert("由于没有指定id，已为当前记录自动分配ID=" + resp.data.record_id);
                     }
@@ -55,9 +55,6 @@ $(function () {
             year: $('#year').val(),
             record_id: $('#recordID').val()
         };
-        if (data.data_value == ""){
-            data.data_value = -1;
-        }
         if (data.record_id == "") {
             data.record_id = -1;
         }
@@ -69,12 +66,12 @@ $(function () {
             data: JSON.stringify(data),
             success: function (resp) {
                 if (resp.error) {
-                    $('#resp').text("");
+                    $('#resp').empty();
                     $('#error').text(resp.error);
                     alert(resp.error)
                 } else {
                     $('#resp').text(resp.result);
-                    $('#error').text("");
+                    $('#error').empty();
                 }
             },
             contentType: 'application/json;charset=utf-8',
@@ -106,12 +103,12 @@ $(function () {
             data: JSON.stringify(data),
             success: function (resp) {
                 if (resp.error) {
-                    $('#resp').text("");
+                    $('#resp').empty();
                     $('#error').text(resp.error);
                     alert(resp.error)
                 } else {
                     $('#resp').text(resp.result);
-                    $('#error').text();
+                    $('#error').empty();
                 }
             },
             contentType: 'application/json;charset=utf-8',
@@ -141,11 +138,12 @@ $(function () {
             success: function (resp) {
                 if (resp.error) {
                     $('#error').text(resp.error);
+                    $('#resp').empty();
                 } else {
                     drawTable(resp.data);
                     rawData = prefilter(resp.data);
                     $('#resp').text(resp.result);
-                    $('#error').text();
+                    $('#error').empty();
 
                     console.log(resp.data);
        

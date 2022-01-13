@@ -267,38 +267,69 @@ public class function {
 		cst.close();// 关闭语句对象
 		dc.close();// 关闭数据库连接
 	}
-	public static void deleteRecord(String s1, String s2, String s3, String country, String year) throws SQLException
+	public static void deleteRecords(String s1, String s2, String s3, String country, String year) throws SQLException
 	{
 		Statement stmt;
 		JDBCConnection dc = new JDBCConnection();// 建立数据库连接
 		CreateStatement cst = new CreateStatement(dc);// 创建语句对象
 		stmt = cst.stmt;
 
+		String sql = "DELETE r FROM"
+		+ "((records r INNER JOIN firstindex i1 ON r.FirstIndexID=i1.IndexID)"
+		+ "INNER JOIN secondindex i2 ON r.SecondIndexID=i2.IndexID)"
+		+ "INNER JOIN thirdindex i3 ON r.ThirdIndexID=i3.IndexID";
+
+		boolean hasCondition = false;
 		// 获得指标id
-		int[] indexid = new int[3];
-		String[] str1 = s1.split("_");
-		String sql1 = "SELECT IndexID FROM firstindex WHERE IndexName = '" + str1[0] + "'";// 10行
-		ResultSet rs1 = stmt.executeQuery(sql1);
-		if (rs1.next()) // 已经存在
-			indexid[0] = rs1.getInt("IndexID");
-		rs1.close();
+		if (s1 != "") {
+			String indexname1 = s1.split("_")[0];
+			if (hasCondition)
+				sql += " AND ";
+			else {
+				sql += " WHERE ";
+				hasCondition = true;
+			}
+			sql += "i1.IndexName='" + indexname1 + "'";
+		}
+		if (s2 != "") {
+			String indexname2 = s2.split("_")[0];
+			if (hasCondition)
+				sql += " AND ";
+			else {
+				sql += " WHERE ";
+				hasCondition = true;
+			}
+			sql += "i2.IndexName='" + indexname2 + "'";
+		}
+		if (s3 != "") {
+			String indexname3 = s3.split("_")[0];
+			if (hasCondition)
+				sql += " AND ";
+			else {
+				sql += " WHERE ";
+				hasCondition = true;
+			}
+			sql += "i3.IndexName='" + indexname3 + "'";
+		}
+		if (country != "") {
+			if (hasCondition)
+				sql += " AND ";
+			else {
+				sql += " WHERE ";
+				hasCondition = true;
+			}
+			sql += "r.Country='" + country + "'";
+		}
+		if (year != "") {
+			if (hasCondition)
+				sql += " AND ";
+			else {
+				sql += " WHERE ";
+				hasCondition = true;
+			}
+			sql += "r.Year='" + year + "'";
+		}
 
-		String[] str2 = s2.split("_");
-		String sql2 = "SELECT IndexID FROM secondindex WHERE IndexName = '" + str2[0]+ "'";// 10行
-		ResultSet rs2 = stmt.executeQuery(sql2);
-		if (rs2.next()) // 已经存在
-			indexid[1] = rs2.getInt("IndexID");
-		rs2.close();
-
-		String[] str3 = s3.split("_");
-		String sql3 = "SELECT IndexID FROM thirdindex WHERE IndexName = '" + str3[0] + "'";// 10行
-		ResultSet rs3 = stmt.executeQuery(sql3);
-		if (rs3.next()) // 已经存在
-			indexid[2] = rs3.getInt("IndexID");
-		rs3.close();
-
-		String sql = "DELETE FROM records WHERE FirstIndexID=" + indexid[0] + " AND SecondIndexID=" + indexid[1]
-				+ " AND ThirdIndexID=" + indexid[2] + " AND Country='" + country + "' AND Year='" + year + "'";
 		stmt.executeUpdate(sql);
 		cst.close();// 关闭语句对象
 		dc.close();// 关闭数据库连接
@@ -530,7 +561,7 @@ public class function {
 		rs.close();
 
 		String jsonOutput = JSON.toJSONString(listOfData);
-		writeToFile(jsonOutput, dataRoot + "query_a_data.json");
+		writeToFile(jsonOutput, dataRoot + "query_index.json");
 		cst.close();// 关闭语句对象
 		dc.close();// 关闭数据库连接
 		return jsonOutput;
