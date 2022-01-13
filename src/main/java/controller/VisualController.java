@@ -26,16 +26,12 @@ public class VisualController {
 			throws IOException, SQLException {
 		response.setContentType("application/json");
 		PrintWriter pw = response.getWriter();
-		if (bean.first_index == null || bean.second_index == null || bean.third_index == null) {
-			pw.write("{\"error\":\"Index not Complete\"}");
+		if (bean.first_index == null && bean.country_name == null && bean.year == null) {
+			pw.write("{\"error\":\"Query Demand not Complete\"}");
 		} 
-		// else if ((bean.country_name != null && bean.year == null) 
-		// || (bean.country_name==null && bean.year!=null)){
-		// 	pw.write("{\"error\":\"Record Info not Complete\"}");
-		// } 
 		else {
-			response.setContentType("application/json");
-			String result = mysql.function.inquireIndex(bean.first_index, bean.second_index, bean.third_index);
+			// TODO：前端已经杜绝了上位概念有，而下位概念缺失的情况，暂不处理
+			String result = mysql.function.inquireRecords(bean.first_index, bean.second_index, bean.third_index, bean.country_name, bean.year);
 			pw.write(String.format("{\"result\":\"Success!\", \"data\":%s}", result));
 		}
 		pw.flush();
@@ -68,14 +64,12 @@ public class VisualController {
 		if (bean.first_index == "" || bean.second_index == "" || bean.third_index == "" || bean.country_name == ""
 				|| bean.year == "" || bean.data_value == -1) {
 			pw.write("\"error\":\"Index not Complete\"");
-		} else if (bean.record_id < 0) {
-			pw.write("{\"error\":\"Record ID Illegal\"}");
 		} else {
 			response.setContentType("application/json");
-			mysql.function.addRecord(bean.first_index, bean.second_index, bean.third_index, bean.record_id,
+			String result = mysql.function.addRecord(bean.first_index, bean.second_index, bean.third_index, bean.record_id,
 					bean.data_value, bean.country_name, bean.year);
-			pw.write("{\"result\":\"Success!\"}");
-		}
+				pw.write(String.format("{\"result\":\"Success!\", \"data\":%s}", result));
+			}
 		return null;
 	}
 
@@ -88,6 +82,7 @@ public class VisualController {
 				response.setContentType("application/json");
 				mysql.function.deleteRecord(bean.record_id);
 				pw.write("{\"result\":\"Success!\"}");
+				System.out.println(bean.record_id);
 			} else if (bean.first_index == "" || bean.second_index == "" || bean.third_index == ""
 					|| bean.country_name == "" || bean.year == "") {
 				pw.write("\"error\":\"Index not Complete\"");
