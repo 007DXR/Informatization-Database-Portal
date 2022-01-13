@@ -55,9 +55,6 @@ $(function () {
             year: $('#year').val(),
             record_id: $('#recordID').val()
         };
-        if (data.data_value == ""){
-            data.data_value = -1;
-        }
         if (data.record_id == "") {
             data.record_id = -1;
         }
