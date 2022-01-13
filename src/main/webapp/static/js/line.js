@@ -26,10 +26,17 @@ function compute(node) {
     redata=[]
     for (var i in countryList){
         var country=countryList[i]
+        var y2019=0,y2020=0,y2021=0
+        if (line_data[country]){
+            
+            if (line_data[country]['2019']) y2019=line_data[country]['2019']
+            if (line_data[country]['2020']) y2020=line_data[country]['2020']
+            if (line_data[country]['2021']) y2021=line_data[country]['2021']
+        }
         redata.push({
             name: country,
             type: 'bar',           
-            data: [line_data[country][2019],line_data[country][2020],line_data[country][2021]]
+            data: [y2019,y2020,y2021]
         }) 
     }
 return redata
