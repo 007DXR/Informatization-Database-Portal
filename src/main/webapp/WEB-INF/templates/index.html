@@ -3,20 +3,17 @@
 {% block main %}
 
 {% if user == null %}
-<h3>Welcome!</h3>
-<br>
 {% else %}
-<h3>Welcome {{ user.name }}!</h3>
-
-<h4><br><a href="/visual">>>进入查询</a></h4>
-
-<br>
+<h4>Welcome <a href="/user/profile">{{ user.name }}</a>!
+    <br> 
+    
+</h4>
 {% endif %}
-
+<a href="/visual"> >>Enter Administrator System</a>
 <script src="/static/js/jquery.js"></script>
 <div class="col-sm-12">
-    <div id="treemap" style="width:100%; height:400px"></div>
-    <div id="line" style="width:100%; height:400px"></div>
+    <div id="treemap" style="width:100%; height:350px"></div>
+    <div id="line" style="width:100%; height:350px"></div>
 </div>
 
 
@@ -26,7 +23,7 @@
 <script>
     var yearList = [2019, 2020, 2021]
     var countryList = ['中国', "法国", "英国", "俄罗斯", "美国"]
-    var tmpData = {{rawData|raw}};
+    var tmpData = {{ rawData| raw}};
     var rawData = prefilter(tmpData)
 </script>
 

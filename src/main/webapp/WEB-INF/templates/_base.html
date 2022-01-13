@@ -17,16 +17,19 @@
 
 <body style="font-size:16px">
   <div class="d-flex flex-column flex-md-row align-items-center p-3 px-md-4 mb-3 bg-white border-bottom shadow-sm">
-    <h5 class="my-0 mr-md-auto font-weight-normal"><a href="/">Home</a></h5>
-    <nav class="my-2 mr-md-3">
-        <a class="p-2 text-dark" href="/overview">Overview</a>
-        <a class="p-2 text-dark" href="/visual">Detail</a>
-    </nav>
+    <h5 class="my-0 mr-md-auto font-weight-normal"><a href="/"class="btn btn-outline-primary">Home</a></h5>
+    <!-- <nav class="my-2 mr-md-3"> -->
+        <!-- <a class="p-2 text-dark" href="/overview">Overview</a> -->
+        
+    <!-- </nav> -->
+    
     {% if user==null %}
+    <a class="btn btn-outline-success" href="/visual">Detail</a>
     <a href="/signin" class="btn btn-outline-primary">Sign In</a>
     {% else %}
-    <span>Welcome, <a href="/user/profile">{{ user.name }}</a></span>
+    <span>Welcome! <a href="/user/profile">{{ user.name }}</a></span>
     &nbsp;&nbsp;&nbsp;
+    <a class="btn btn-outline-success" href="/visual">Detail</a>
     <a href="/signout" class="btn btn-outline-primary">Sign Out</a>
     {% endif %}
 </div>
