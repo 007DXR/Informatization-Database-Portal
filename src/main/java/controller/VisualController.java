@@ -26,7 +26,7 @@ public class VisualController {
 			throws IOException, SQLException {
 		response.setContentType("application/json");
 		PrintWriter pw = response.getWriter();
-		if (bean.first_index == null && bean.country_name == null && bean.year == null) {
+		if (bean.first_index == "" && bean.country_name == "" && bean.year == "") {
 			pw.write("{\"error\":\"Query Demand not Complete\"}");
 		} 
 		else {
@@ -83,12 +83,11 @@ public class VisualController {
 				mysql.function.deleteRecord(bean.record_id);
 				pw.write("{\"result\":\"Success!\"}");
 				System.out.println(bean.record_id);
-			} else if (bean.first_index == "" || bean.second_index == "" || bean.third_index == ""
-					|| bean.country_name == "" || bean.year == "") {
+			} else if (bean.first_index == "" && bean.country_name == "" && bean.year == "") {
 				pw.write("\"error\":\"Index not Complete\"");
 			} else {
 				response.setContentType("application/json");
-				mysql.function.deleteRecord(bean.first_index, bean.second_index, bean.third_index, bean.country_name, bean.year);
+				mysql.function.deleteRecords(bean.first_index, bean.second_index, bean.third_index, bean.country_name, bean.year);
 				pw.write("{\"result\":\"Success!\"}");
 			}
 			return null;
