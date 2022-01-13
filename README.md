@@ -1,40 +1,10 @@
 # java前端代码解释
 
-data.json 教师提供的数据
-
-filter.js 对data.json进行预处理，转化为我想使用的数据格式
-
-form.js 服务于form.html 是表单的下拉框显示内容的计算构造函数
-
-line.js 服务于project.html 提供折线图模块
-
-treemap.js 服务于project.html 提供层次结构图模块
-
-form.html 提交“增删查改”表单向服务器发送以下信息
-
-document.getElementById("level1").value
-
-document.getElementById("level2").value
-
-document.getElementById("level3").value
-
-document.getElementById("country").value
-
-document.getElementById("year").value
-
-document.getElementById("value").value
-
-document.getElementById("submit")
-
-document.getElementById("addition")
-
-document.getElementById("delete")
-
-document.getElementById("query")
-
-project.html 主页面
-
-包含三个子模块，分别是层次结构图，折线图，表单。其中表单以内嵌HTML的形式(form.html内嵌)展现在project.html上
+新增了前端功能
+设想的界面：首先进入主页，主页可以显示概览情况。概览情况由所有数据构成，用treemap+line可视化，还可在此基础上再加组件
+从主页可以进入查询界面，进入查询界面需要注册，登录（可以弹窗提示注册）。
+查询界面由两部分组成，左侧上方是表单，用于增删查改。左侧下方显示相应的数据。右侧是根据左侧的信息进行可视化的饼图（还可在此基础上再加组件）
+目前存在的问题是：如果查询的条件非常详细，那么左侧给出的信息可变量太少，难以可视化。大家帮忙想想主意（或者查询详情的时候减少可视化）
 
 # Data-MYSQL
 
