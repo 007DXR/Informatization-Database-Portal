@@ -217,7 +217,7 @@ Also thanks to Tomcat, Pebble, Fastjson, Jackson, commons-io and so on. Recent n
 
 暂时没有注册系统，通过在`/src/main/controller/UserController.java`(line:24-27)的Stream中增添userBean可以实现注册。
 
-不注册可以直接使用username: tom@example.com和password: tomcat登录。
+不注册可以直接使用`Email:tom@example.com`和`Password:tomcat`登录。
 
 在进入详情页时会提醒登录，或点击右上角Sign in可以直接登录。
 
