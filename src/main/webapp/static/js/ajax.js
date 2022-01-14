@@ -127,10 +127,13 @@ $(function () {
             country_name: $('#country').val(),
             data_value: $('#value').val(),
             year: $('#year').val(),
-            record_id: null
+            record_id: $('#recordID').val()
         };
         console.log("请求:")
         console.log(data)
+        if (data.record_id < 0 || data.record_id == ""){
+            data.record_id = -1;
+        }
         $.ajax({
             type: 'POST',
             url: '/visual/inquiry',
