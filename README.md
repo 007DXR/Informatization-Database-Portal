@@ -119,7 +119,7 @@ Also thanks to Tomcat, Pebble, Fastjson, Jackson, commons-io and so on. Recent n
 
 ### 数据库准备
 
-该项目使用了一个非常简单的方式来操作数据库，所以您可能需要将您自己的MySQL数据库的用户名和密码存储在`src/main/java/ MySQL /JDBCConnection.java`(第25行)中。这可能会导致潜在的安全问题。
+该项目使用了一个非常简单的方式来操作数据库，所以您可能需要将您自己的MySQL数据库的用户名和密码存储在`src/main/java/MySQL/JDBCConnection.java`(第25行)中。这可能会导致潜在的安全问题。
 
 因此，我个人建议您创建一个临时用户。这里，我们展示了`data/test_user.sql`中的示例。以添加一个只有最少权限的test_user。
 
@@ -132,6 +132,8 @@ Also thanks to Tomcat, Pebble, Fastjson, Jackson, commons-io and so on. Recent n
 在这个项目中，我们将Tomcat容器嵌入到源代码中。所以您不需要把它压缩成jar包，然后在tomcat web服务器上运行。
 
 比如在eclipse上运行时，只需作为应用程序运行即可。
+
+main函数位置在`src/main/java/[default/]Main.java`
 
 ## 项目结构
 
