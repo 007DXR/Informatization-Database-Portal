@@ -1,7 +1,7 @@
 # Java web database portal 信息化程度数据库门户网站
 >本项目是2021秋季学期北京大学信息管理系课程《面向对象程序设计JAVA》的课程设计作业。中文版附于英文简版后。
 
-This is a Java web application project of a undergraduate grade-2 course for java.
+This is a Java web application project of an undergraduate grade-2 course for java.
 
 ## Installation
 
@@ -129,7 +129,7 @@ Also thanks to Tomcat, Pebble, Fastjson, Jackson, commons-io and so on. Recent n
 
 ### 以应用程序运行
 
-在这个项目中，我们将Tomcat容器嵌入到源代码中。所以你不需要把它压缩成jar包，然后在tomcat web服务器上运行。
+在这个项目中，我们将Tomcat容器嵌入到源代码中。所以您不需要把它压缩成jar包，然后在tomcat web服务器上运行。
 
 比如在eclipse上运行时，只需作为应用程序运行即可。
 
