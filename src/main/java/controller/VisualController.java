@@ -26,9 +26,13 @@ public class VisualController {
 			throws IOException, SQLException {
 		response.setContentType("application/json");
 		PrintWriter pw = response.getWriter();
-		if (bean.first_index == "" && bean.country_name == "" && bean.year == "") {
+		if (bean.record_id != -1){
+			String result = mysql.function.inquireRecord(bean.record_id);
+			pw.write(String.format("{\"result\":\"Success!\", \"data\":%s}", result));
+		}
+		else if (bean.first_index == "" && bean.country_name == "" && bean.year == "") {
 			pw.write("{\"error\":\"Query Demand not Complete\"}");
-		} 
+		}
 		else {
 			// TODO：前端已经杜绝了上位概念有，而下位概念缺失的情况，暂不处理
 			String result = mysql.function.inquireRecords(bean.first_index, bean.second_index, bean.third_index, bean.country_name, bean.year);

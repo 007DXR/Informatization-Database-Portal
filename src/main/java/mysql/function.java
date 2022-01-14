@@ -552,7 +552,6 @@ public class function {
 		}
 		List<Data> listOfData = new ArrayList<Data>();
 		ResultSet rs = stmt.executeQuery(sql);
-		rs.next();
 		while (rs.next()) {
 			listOfData.add(new Data(rs.getInt("dataID"), rs.getString("Country"), rs.getString("Year"),
 					rs.getString("FirstIndexName"), rs.getString("SecondIndexName"), rs.getString("ThirdIndexName"),
