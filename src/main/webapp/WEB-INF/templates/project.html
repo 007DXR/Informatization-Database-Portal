@@ -1,11 +1,6 @@
 {% extends "_base.html" %}
 
 {% block main %}
-{% if user == null %}
-<h3>Permission denied!<br> Please <a href="/signin" >Sign In</a> first!</h3>
-<script>alert("Permission denied!\nPlease sign in first!")</script>
-{% else %}
-
 <div class="col-sm-6">
     <form class="form-horizontal">
         <div class="form-group">
@@ -74,9 +69,11 @@
 
         <div class="form-group">
             <div class="col-xs-offset-2 col-xs-12">
+                {% if user != null %}
                 <button id="submit" type="submit" class="btn btn-primary">修改</button>&nbsp;&nbsp;&nbsp;&nbsp;
                 <button id="addition" type="submit" class="btn btn-success">增加</button>&nbsp;&nbsp;&nbsp;&nbsp;
                 <button id="delete" type="submit" class="btn btn-info">删除</button>&nbsp;&nbsp;&nbsp;&nbsp;
+                {% endif %}
                 <button id="query" type="submit" class="btn btn-warning">查询</button>
             </div>
         </div>
@@ -118,5 +115,4 @@
 <!-- <script src="/static/js/treemap.js"></script>
 <script src="/static/js/line.js"></script> -->
 <script src="/static/js/pie.js"></script>
-{% endif %}
 {% endblock %}
